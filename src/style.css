@@ -36,46 +36,98 @@ cui-dialpad      .phone-number-entry {
 /* Furi Labs */
 
 #answer {
+  min-height: 60px;
+  border: none;
+  border-radius: 12px;
+  -gtk-outline-radius: 12px;
+  font-weight: 700;
   background-image: none;
-  background-color: #2e7d32;
+  background-color: #2ec27e;
   color: #ffffff;
-  border-color: rgba(0,0,0,0.15);
 }
 
 #answer:hover {
-  background-color: #2a7030;
+  background-color: #29ad70;
 }
 
 #answer:active {
-  background-color: #255e2a;
+  background-color: #1a7f50;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 #answer:disabled {
-  background-color: #1f4d24;
+  background-color: alpha(#2ec27e, 0.5);
   color: rgba(255,255,255,0.5);
 }
 
 #hang_up {
+  min-height: 60px;
+  border: none;
+  border-radius: 12px;
+  -gtk-outline-radius: 12px;
+  font-weight: 700;
   background-image: none;
-  background-color: #d32f2f;
+  background-color: #e01b24;
   color: #ffffff;
-  border-color: rgba(0,0,0,0.15);
 }
 
 #hang_up:hover {
-  background-color: #c62828;
+  background-color: #cc1820;
 }
 
 #hang_up:active {
-  background-color: #b71c1c;
+  background-color: #a51d2d;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 #hang_up:disabled {
-  background-color: #8e1515;
+  background-color: alpha(#e01b24, 0.5);
   color: rgba(255,255,255,0.5);
 }
 
 #answer.image-button,
 #hang_up.image-button {
   border-radius: 9999px;
+}
+
+/* Furi Labs: pill stack matching the telephony in-call window.
+
+   Colours come from the theme foreground rather than literal black so the
+   stack survives a dark theme; telephony's press-shrink is a GTK4 transform
+   and has no GTK3 equivalent, so the press reads as an inset shadow. */
+
+cui-call-display .cui-row-button {
+  min-height: 60px;
+  padding: 0 14px;
+  border: none;
+  box-shadow: none;
+  background-image: none;
+  background-color: alpha(@theme_fg_color, 0.08);
+  border-radius: 12px;
+  -gtk-outline-radius: 12px;
+  font-weight: 700;
+}
+
+cui-call-display .cui-row-button:hover {
+  background-color: alpha(@theme_fg_color, 0.12);
+}
+
+cui-call-display .cui-row-button:checked,
+cui-call-display .cui-row-button:active {
+  background-color: alpha(@theme_fg_color, 0.2);
+  box-shadow: inset 0 2px 4px alpha(@theme_fg_color, 0.2);
+}
+
+cui-call-display .cui-row-state {
+  color: alpha(@theme_fg_color, 0.7);
+  font-weight: 400;
+}
+
+cui-call-display .cui-row-muted {
+  color: #c01c28;
+}
+
+cui-call-display cui-keypad > grid > button {
+  border-radius: 12px;
+  -gtk-outline-radius: 12px;
 }

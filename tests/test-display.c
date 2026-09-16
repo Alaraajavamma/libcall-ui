@@ -26,7 +26,6 @@ test_display (void)
   CuiDummyCall *call_one = cui_dummy_call_new ();
   CuiDummyCall *call_two = cui_dummy_call_new ();
 
-  g_test_expect_message ("Cui", G_LOG_LEVEL_WARNING, "libcallaudio not initialized");
 
   display = cui_call_display_new (NULL);
 

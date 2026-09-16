@@ -11,7 +11,6 @@ call_ui_resources = gnome.compile_resources(
 )
 
 call_ui_deps = [
-  libcallaudio_dep,
   gio_dep,
   gtk_dep,
   libhandy_dep,
@@ -20,6 +19,8 @@ call_ui_deps = [
 ]
 
 call_ui_private_sources = files(
+  'cui-audio-router.c',
+  'cui-audio-router.h',
   'cui-encryption-indicator.c',
   'cui-encryption-indicator-priv.h',
   'cui-keypad-button.c',

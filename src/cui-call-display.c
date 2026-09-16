@@ -20,7 +20,7 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <handy.h>
-#include <libcallaudio.h>
+#include "cui-audio-router.h"
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
@@ -38,6 +38,7 @@
 enum {
   PROP_0,
   PROP_CALL,
+  PROP_ALLOW_ADD_CALL,
   PROP_LAST_PROP,
 };
 static GParamSpec *props[PROP_LAST_PROP];
@@ -57,36 +58,38 @@ struct _CuiCallDisplay {
   GtkBox                 *general_controls;
   GtkToggleButton        *speaker;
   GtkToggleButton        *mute;
+  GtkLabel               *mute_label;
   GtkButton              *hang_up;
+  GtkButton              *add_call;
+  gboolean                allow_add_call;
   GtkButton              *answer;
   CuiEncryptionIndicator *encryption_indicator;
 
   GCancellable           *cancel;
   GtkRevealer            *dial_pad_revealer;
   GtkToggleButton        *dial_pad;
+  GtkToggleButton        *actions;
+  GtkRevealer            *actions_revealer;
+  GtkRevealer            *speaker_revealer;
+  GtkRevealer            *mute_revealer;
+  GtkLabel               *speaker_label;
+  GtkWidget              *keypad_speaker;
+  GtkToggleButton        *hold;
+  GtkBox                 *box_speaker;
+  GtkBox                 *box_mute;
   GtkEntry               *keypad_entry;
+
+  CuiAudioRouter         *router;
+  gulong                  router_changed_id;
 
   GBinding               *dtmf_bind;
   GBinding               *avatar_icon_bind;
   GBinding               *encryption_bind;
 
-  gboolean                needs_cam_reset; /* cam = Call Audio Mode */
   gboolean                update_status_time;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
-
-
-/* Just print an error, the main point is that libcallaudio uses async DBus calls */
-static void
-on_libcallaudio_async_finished (gboolean success, GError *error, gpointer data)
-{
-  if (!success) {
-    g_return_if_fail (error && error->message);
-    g_warning ("Failed to select audio mode: %s", error->message);
-    g_error_free (error);
-  }
-}
 
 
 static void
@@ -126,14 +129,13 @@ hold_toggled_cb (GtkToggleButton *togglebutton,
 }
 
 
+/* Re-ask on the way open: a headset can arrive while the sheet is shut. */
 static void
 mute_toggled_cb (GtkToggleButton *togglebutton,
                  CuiCallDisplay  *self)
 {
-  gboolean want_mute;
-
-  want_mute = gtk_toggle_button_get_active (togglebutton);
-  call_audio_mute_mic_async (want_mute, on_libcallaudio_async_finished, NULL);
+  if (gtk_toggle_button_get_active (togglebutton))
+    cui_audio_router_refresh (self->router);
 }
 
 
@@ -141,10 +143,8 @@ static void
 speaker_toggled_cb (GtkToggleButton *togglebutton,
                     CuiCallDisplay  *self)
 {
-  gboolean want_speaker;
-
-  want_speaker = gtk_toggle_button_get_active (togglebutton);
-  call_audio_enable_speaker_async (want_speaker, on_libcallaudio_async_finished, NULL);
+  if (gtk_toggle_button_get_active (togglebutton))
+    cui_audio_router_refresh (self->router);
 }
 
 
@@ -159,6 +159,205 @@ static void
 hide_dial_pad_clicked_cb (CuiCallDisplay *self)
 {
   gtk_revealer_set_reveal_child (self->dial_pad_revealer, FALSE);
+}
+
+
+
+/*
+ * The route and the microphone are chosen from their own sheets rather than
+ * from the pills, so each pill can say what is in force instead of only
+ * whether it is pressed. Both sheets list what the daemon offers, so a
+ * headset that arrives mid-call shows up without the display guessing.
+ */
+static GtkWidget *
+add_sheet_row (CuiCallDisplay *self,
+               GtkBox         *box,
+               const char     *icon_name,
+               const char     *label,
+               gboolean        selected,
+               gboolean        available,
+               GCallback       callback)
+{
+  GtkWidget *button = gtk_button_new ();
+  GtkWidget *row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 10);
+  GtkWidget *icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), 20);
+  gtk_widget_set_halign (row, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (row), icon, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (row), gtk_label_new (label), FALSE, FALSE, 0);
+
+  if (!available) {
+    GtkWidget *subtitle = gtk_label_new (_("Not connected"));
+
+    gtk_style_context_add_class (gtk_widget_get_style_context (subtitle), "dim-label");
+    gtk_box_pack_start (GTK_BOX (row), subtitle, FALSE, FALSE, 0);
+  } else if (selected) {
+    GtkWidget *check = gtk_image_new_from_icon_name ("object-select-symbolic",
+                                                     GTK_ICON_SIZE_BUTTON);
+
+    gtk_image_set_pixel_size (GTK_IMAGE (check), 16);
+    gtk_box_pack_start (GTK_BOX (row), check, FALSE, FALSE, 0);
+  }
+
+  gtk_widget_set_can_default (button, FALSE);
+  gtk_widget_set_size_request (button, -1, 56);
+  gtk_container_add (GTK_CONTAINER (button), row);
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "cui-row-button");
+  gtk_widget_set_sensitive (button, available);
+
+  if (available && callback)
+    g_signal_connect_swapped (button, "clicked", callback, self);
+
+  gtk_box_pack_start (box, button, FALSE, FALSE, 0);
+  gtk_widget_show_all (button);
+
+  return button;
+}
+
+
+static void
+clear_sheet_rows (GtkBox *box)
+{
+  g_autoptr (GList) children = gtk_container_get_children (GTK_CONTAINER (box));
+
+  for (GList *l = children ? children->next : NULL; l; l = l->next)
+    gtk_widget_destroy (GTK_WIDGET (l->data));
+}
+
+
+static void
+output_row_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+{
+  const char *route_id = g_object_get_data (G_OBJECT (button), "route-id");
+
+  cui_audio_router_set_output (self->router, route_id);
+  gtk_toggle_button_set_active (self->speaker, FALSE);
+}
+
+
+static void
+input_row_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+{
+  const char *route_id = g_object_get_data (G_OBJECT (button), "route-id");
+
+  cui_audio_router_set_mic_muted (self->router, FALSE);
+  cui_audio_router_set_input (self->router, route_id);
+  gtk_toggle_button_set_active (self->mute, FALSE);
+}
+
+
+static void
+input_mute_clicked_cb (CuiCallDisplay *self)
+{
+  cui_audio_router_set_mic_muted (self->router, TRUE);
+  gtk_toggle_button_set_active (self->mute, FALSE);
+}
+
+
+static void
+rebuild_output_sheet (CuiCallDisplay *self)
+{
+  GPtrArray *routes = cui_audio_router_get_outputs (self->router);
+  const char *active = cui_audio_router_get_output (self->router);
+
+  clear_sheet_rows (self->box_speaker);
+
+  for (guint i = 0; routes && i < routes->len; i++) {
+    CuiAudioRoute *route = g_ptr_array_index (routes, i);
+    GtkWidget *button = add_sheet_row (self, self->box_speaker,
+                                       cui_audio_router_output_icon (route->id),
+                                       cui_audio_router_output_label (route->id),
+                                       g_strcmp0 (route->id, active) == 0,
+                                       route->available,
+                                       G_CALLBACK (output_row_clicked_cb));
+
+    g_object_set_data_full (G_OBJECT (button), "route-id",
+                            g_strdup (route->id), g_free);
+  }
+}
+
+
+static void
+rebuild_input_sheet (CuiCallDisplay *self)
+{
+  GPtrArray *routes = cui_audio_router_get_inputs (self->router);
+  const char *active = cui_audio_router_get_input (self->router);
+  gboolean muted = cui_audio_router_get_mic_muted (self->router);
+
+  clear_sheet_rows (self->box_mute);
+
+  for (guint i = 0; routes && i < routes->len; i++) {
+    CuiAudioRoute *route = g_ptr_array_index (routes, i);
+    GtkWidget *button = add_sheet_row (self, self->box_mute,
+                                       cui_audio_router_input_icon (route->id),
+                                       cui_audio_router_input_label (route->id),
+                                       !muted && g_strcmp0 (route->id, active) == 0,
+                                       route->available,
+                                       G_CALLBACK (input_row_clicked_cb));
+
+    g_object_set_data_full (G_OBJECT (button), "route-id",
+                            g_strdup (route->id), g_free);
+  }
+
+  add_sheet_row (self, self->box_mute, "microphone-sensitivity-muted-symbolic",
+                 _("Muted"), muted, TRUE, G_CALLBACK (input_mute_clicked_cb));
+}
+
+
+static void
+on_router_changed (CuiCallDisplay *self)
+{
+  const char *route = cui_audio_router_get_output (self->router);
+  gboolean muted = cui_audio_router_get_mic_muted (self->router);
+  GtkStyleContext *style = gtk_widget_get_style_context (GTK_WIDGET (self->mute_label));
+
+  gtk_label_set_label (self->speaker_label, cui_audio_router_output_label (route));
+  gtk_widget_set_visible (self->keypad_speaker, g_str_equal (route, "earpiece"));
+
+  /* Nothing to choose from until a provider answers, so do not offer the sheets. */
+  gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), cui_audio_router_is_ready (self->router));
+  gtk_widget_set_sensitive (GTK_WIDGET (self->mute), cui_audio_router_is_ready (self->router));
+
+  gtk_label_set_label (self->mute_label,
+                       muted ? _("Muted")
+                             : cui_audio_router_input_label (cui_audio_router_get_input (self->router)));
+  if (muted)
+    gtk_style_context_add_class (style, "cui-row-muted");
+  else
+    gtk_style_context_remove_class (style, "cui-row-muted");
+
+  rebuild_output_sheet (self);
+  rebuild_input_sheet (self);
+}
+
+
+/* Offered on the keypad sheet only while the call is still on the earpiece. */
+static void
+keypad_speaker_clicked_cb (CuiCallDisplay *self)
+{
+  cui_audio_router_set_output (self->router, "speaker");
+}
+
+
+static void
+hide_output_clicked_cb (CuiCallDisplay *self)
+{
+  gtk_revealer_set_reveal_child (self->speaker_revealer, FALSE);
+}
+
+
+static void
+hide_input_clicked_cb (CuiCallDisplay *self)
+{
+  gtk_revealer_set_reveal_child (self->mute_revealer, FALSE);
+}
+
+
+static void
+hide_actions_clicked_cb (CuiCallDisplay *self)
+{
+  gtk_revealer_set_reveal_child (self->actions_revealer, FALSE);
 }
 
 
@@ -230,19 +429,14 @@ on_call_state_changed (CuiCallDisplay *self,
       (GTK_WIDGET (self->gsm_controls),
       state != CUI_CALL_STATE_CALLING);
 
-    /* TODO Only switch to "call" audio mode for cellular calls */
-    call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
-                                  on_libcallaudio_async_finished,
-                                  NULL);
-    self->needs_cam_reset = TRUE;
+    /*
+     * The daemon raises the voice profile and picks the opening route when
+     * the call starts; ask it what it settled on rather than deciding here.
+     */
+    cui_audio_router_refresh (self->router);
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
-    if (self->needs_cam_reset)
-      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
-                                    on_libcallaudio_async_finished,
-                                    NULL);
-
     gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
     break;
 
@@ -391,6 +585,9 @@ cui_call_display_get_property (GObject    *object,
   case PROP_CALL:
     g_value_set_object (value, self->call);
     break;
+  case PROP_ALLOW_ADD_CALL:
+    g_value_set_boolean (value, self->allow_add_call);
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
@@ -408,6 +605,9 @@ cui_call_display_set_property (GObject      *object,
   switch (property_id) {
   case PROP_CALL:
     cui_call_display_set_call (self, g_value_get_object (value));
+    break;
+  case PROP_ALLOW_ADD_CALL:
+    cui_call_display_set_allow_add_call (self, g_value_get_boolean (value));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -470,6 +670,9 @@ cui_call_display_dispose (GObject *object)
     self->call = NULL;
   }
 
+  g_clear_signal_handler (&self->router_changed_id, self->router);
+  g_clear_object (&self->router);
+
   G_OBJECT_CLASS (cui_call_display_parent_class)->dispose (object);
 }
 
@@ -498,9 +701,32 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
                                           G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
                                           G_PARAM_EXPLICIT_NOTIFY);
 
+  /**
+   * CuiCallDisplay:allow-add-call:
+   *
+   * Whether starting a second call is offered. A lock screen shows the
+   * call without offering a way into the dialer, so it turns this off.
+   */
+  props[PROP_ALLOW_ADD_CALL] = g_param_spec_boolean ("allow-add-call",
+                                                     "",
+                                                     "",
+                                                     TRUE,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS |
+                                                     G_PARAM_EXPLICIT_NOTIFY);
+
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-call-display.ui");
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, actions);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, actions_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, speaker_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, speaker_label);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_speaker);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hold);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_speaker);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_mute);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, add_call);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, controls);
@@ -512,12 +738,17 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute_label);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, secondary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, speaker);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, status);
   gtk_widget_class_bind_template_callback (widget_class, add_call_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, block_delete_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hide_actions_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hide_input_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hide_output_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, keypad_speaker_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, insert_text_cb);
@@ -527,6 +758,28 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-call-display");
+}
+
+
+
+/*
+ * Both sheets slide up over the display from the same edge, so only one of
+ * them may be open: opening either shuts the other rather than stacking.
+ */
+static void
+sheet_toggled_cb (GtkToggleButton *button,
+                  CuiCallDisplay  *self)
+{
+  GtkToggleButton *sheets[] = { self->dial_pad, self->actions, self->speaker, self->mute };
+  guint i;
+
+  if (!gtk_toggle_button_get_active (button))
+    return;
+
+  for (i = 0; i < G_N_ELEMENTS (sheets); i++) {
+    if (sheets[i] != button)
+      gtk_toggle_button_set_active (sheets[i], FALSE);
+  }
 }
 
 
@@ -558,13 +811,28 @@ cui_force_css_on_buttons (GtkWidget *hang_up, GtkWidget *answer)
 static void
 cui_call_display_init (CuiCallDisplay *self)
 {
+  self->allow_add_call = TRUE;
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  if (!call_audio_is_inited ()) {
-    g_warning ("libcallaudio not initialized");
-    gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET (self->mute), FALSE);
-  }
+  self->router = g_object_ref (cui_audio_router_get_default ());
+  self->router_changed_id = g_signal_connect_swapped (self->router, "changed",
+                                                      G_CALLBACK (on_router_changed), self);
+  on_router_changed (self);
+
+  g_signal_connect (self->dial_pad, "toggled", G_CALLBACK (sheet_toggled_cb), self);
+  g_signal_connect (self->actions, "toggled", G_CALLBACK (sheet_toggled_cb), self);
+  g_signal_connect (self->speaker, "toggled", G_CALLBACK (sheet_toggled_cb), self);
+  g_signal_connect (self->mute, "toggled", G_CALLBACK (sheet_toggled_cb), self);
+
+  gtk_widget_set_visible (self->keypad_speaker, TRUE);
+
+  /*
+   * Hold and add-call have nothing behind them: CuiCall can accept, hang up
+   * and send DTMF, and nothing else. They stay insensitive until the call
+   * interface can express them rather than looking live and doing nothing.
+   */
+  gtk_widget_set_sensitive (GTK_WIDGET (self->hold), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->add_call), FALSE);
 
   cui_force_css_on_buttons (GTK_WIDGET (self->hang_up),
                             GTK_WIDGET (self->answer));
@@ -593,6 +861,38 @@ cui_call_display_new (CuiCall *call)
  * Returns the current [iface@CuiCall]
  * Returns: (transfer none) (nullable): The current [iface@CuiCall].
  */
+/**
+ * cui_call_display_set_allow_add_call:
+ * @self: a #CuiCallDisplay
+ * @allow_add_call: whether a second call may be started
+ *
+ * Hides the add call button when a second call must not be reachable.
+ */
+void
+cui_call_display_set_allow_add_call (CuiCallDisplay *self, gboolean allow_add_call)
+{
+  g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
+
+  allow_add_call = !!allow_add_call;
+
+  if (self->allow_add_call == allow_add_call)
+    return;
+
+  self->allow_add_call = allow_add_call;
+  gtk_widget_set_visible (GTK_WIDGET (self->add_call), allow_add_call);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ALLOW_ADD_CALL]);
+}
+
+
+gboolean
+cui_call_display_get_allow_add_call (CuiCallDisplay *self)
+{
+  g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), TRUE);
+
+  return self->allow_add_call;
+}
+
+
 CuiCall *
 cui_call_display_get_call (CuiCallDisplay *self)
 {
@@ -627,7 +927,6 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
   }
 
   self->update_status_time = TRUE;
-  self->needs_cam_reset = FALSE;
 
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);

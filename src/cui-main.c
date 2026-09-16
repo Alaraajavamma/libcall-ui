@@ -9,13 +9,11 @@
 #include "cui-encryption-indicator-priv.h"
 #include "cui-resources.h"
 
-#include <libcallaudio.h>
 #include <gio/gio.h>
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
 static gboolean cui_initialized = FALSE;
-static gboolean call_audio_initialized = FALSE;
 
 /**
  * SECTION:cui-main
@@ -65,7 +63,7 @@ cui_init_icons (void)
 
 /**
  * cui_init:
- * @init_callaudio: Whether to initialize libcallaudio
+ * @init_callaudio: Ignored; call audio belongs to the telephony daemon
  *
  * Call this function just after initializing GTK, if you are using
  * #GtkApplication it means it must be called when the #GApplication::startup
@@ -94,11 +92,6 @@ cui_init (gboolean init_callaudio)
   cui_init_icons ();
   cui_init_css ();
 
-  if (init_callaudio) {
-    call_audio_init (NULL);
-    call_audio_initialized = TRUE;
-  }
-
   cui_initialized = TRUE;
 }
 
@@ -111,8 +104,4 @@ cui_init (gboolean init_callaudio)
 void
 cui_uninit (void)
 {
-  if (call_audio_initialized) {
-    call_audio_deinit ();
-    call_audio_initialized = FALSE;
-  }
 }

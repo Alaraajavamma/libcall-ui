@@ -22,5 +22,8 @@ CuiCallDisplay *cui_call_display_new        (CuiCall *call);
 void            cui_call_display_set_call   (CuiCallDisplay *self,
                                              CuiCall        *call);
 CuiCall        *cui_call_display_get_call   (CuiCallDisplay *self);
+void            cui_call_display_set_allow_add_call (CuiCallDisplay *self,
+                                                     gboolean        allow_add_call);
+gboolean        cui_call_display_get_allow_add_call (CuiCallDisplay *self);
 
 G_END_DECLS

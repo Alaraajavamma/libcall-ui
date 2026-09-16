@@ -17,7 +17,6 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <handy.h>
-#include <libcallaudio.h>
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 

@@ -9,7 +9,6 @@ test_dialpad (void)
   CuiDialpad *dialpad;
   GValue val = G_VALUE_INIT;
 
-  g_test_expect_message ("Cui", G_LOG_LEVEL_WARNING, "libcallaudio not initialized");
 
   dialpad = cui_dialpad_new ();
 
