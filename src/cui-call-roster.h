@@ -17,6 +17,7 @@ G_DECLARE_FINAL_TYPE (CuiCallRoster, cui_call_roster, CUI, CALL_ROSTER, GObject)
 typedef struct {
   char     *path;
   char     *number;
+  char     *name;
   char     *state;
   gboolean  multiparty;
 } CuiRosterCall;

@@ -15,6 +15,10 @@
 #define DAEMON_OBJECT_PATH "/io/furios/Telephony/Daemon"
 #define DAEMON_INTERFACE   "io.furios.Telephony.Daemon"
 
+#define CALLS_BUS_NAME     "org.gnome.Calls"
+#define CALLS_OBJECT_PATH  "/org/gnome/Calls"
+#define CALLS_INTERFACE    "org.gnome.Calls.Call"
+
 /*
  * CuiCall describes one call and knows nothing of any other, so a display
  * holding a single call cannot tell whether a second one exists. The daemon
@@ -28,10 +32,14 @@ enum {
 static guint signals[N_SIGNALS];
 
 struct _CuiCallRoster {
-  GObject     parent_instance;
+  GObject         parent_instance;
 
-  GDBusProxy *proxy;
-  GPtrArray  *calls;
+  GDBusProxy     *proxy;
+  GDBusProxy     *calls_proxy;
+  GDBusConnection *bus;
+  guint           watch_id;
+  GPtrArray      *calls;
+  GHashTable     *names;
 };
 
 G_DEFINE_TYPE (CuiCallRoster, cui_call_roster, G_TYPE_OBJECT)
@@ -44,8 +52,90 @@ cui_roster_call_free (gpointer data)
 
   g_free (call->path);
   g_free (call->number);
+  g_free (call->name);
   g_free (call->state);
   g_free (call);
+}
+
+
+/*
+ * The daemon keys calls by modem path and carries no contact name, while
+ * org.gnome.Calls resolves one per number. That is the same name the display
+ * already shows for the featured call, so taking it from there keeps one
+ * screen from naming the same person two different ways.
+ */
+/* The roster and the names arrive on their own schedule, so join them on both. */
+static void
+apply_names (CuiCallRoster *self)
+{
+  for (guint i = 0; self->calls && i < self->calls->len; i++) {
+    CuiRosterCall *call = g_ptr_array_index (self->calls, i);
+    const char *name = g_hash_table_lookup (self->names, call->number);
+
+    g_clear_pointer (&call->name, g_free);
+    if (name && !g_str_equal (name, call->number))
+      call->name = g_strdup (name);
+  }
+}
+
+
+static void
+on_managed_objects_ready (GObject *source, GAsyncResult *result, gpointer data)
+{
+  CuiCallRoster *self = data;
+  g_autoptr (GVariant) reply = NULL;
+  g_autoptr (GVariant) objects = NULL;
+  g_autoptr (GError) error = NULL;
+  GVariantIter iter;
+  const char *path;
+  GVariant *interfaces;
+
+  reply = g_dbus_proxy_call_finish (G_DBUS_PROXY (source), result, &error);
+  if (!reply) {
+    g_debug ("Listing calls failed: %s", error->message);
+    return;
+  }
+
+  objects = g_variant_get_child_value (reply, 0);
+  if (!g_variant_is_of_type (objects, G_VARIANT_TYPE ("a{oa{sa{sv}}}"))) {
+    g_debug ("Unexpected managed object type %s", g_variant_get_type_string (objects));
+    return;
+  }
+
+  g_hash_table_remove_all (self->names);
+
+  g_variant_iter_init (&iter, objects);
+  while (g_variant_iter_next (&iter, "{&o@a{sa{sv}}}", &path, &interfaces)) {
+    g_autoptr (GVariant) props = g_variant_lookup_value (interfaces, CALLS_INTERFACE,
+                                                         G_VARIANT_TYPE_VARDICT);
+
+    if (props) {
+      const char *id = NULL;
+      const char *display_name = NULL;
+
+      g_variant_lookup (props, "Id", "&s", &id);
+      g_variant_lookup (props, "DisplayName", "&s", &display_name);
+
+      if (id && *id && display_name && *display_name)
+        g_hash_table_insert (self->names, g_strdup (id), g_strdup (display_name));
+    }
+    g_variant_unref (interfaces);
+  }
+
+  apply_names (self);
+  g_signal_emit (self, signals[CHANGED], 0);
+}
+
+
+static void
+refresh_names (CuiCallRoster *self)
+{
+  if (!self->calls_proxy)
+    return;
+
+  g_dbus_proxy_call (self->calls_proxy, "GetManagedObjects", NULL,
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL,
+                     on_managed_objects_ready, self);
 }
 
 
@@ -100,6 +190,7 @@ on_state_ready (GObject *source, GAsyncResult *result, gpointer data)
     g_variant_unref (props);
   }
 
+  apply_names (self);
   g_signal_emit (self, signals[CHANGED], 0);
 }
 
@@ -137,13 +228,64 @@ on_proxy_ready (GObject *source, GAsyncResult *result, gpointer data)
 }
 
 
+/*
+ * A name can resolve after the call it belongs to appears, so watch for the
+ * later property change as well as for calls coming and going.
+ */
+static void
+on_calls_signal (GDBusConnection *connection,
+                 const char      *sender,
+                 const char      *path,
+                 const char      *interface,
+                 const char      *signal_name,
+                 GVariant        *parameters,
+                 gpointer         data)
+{
+  refresh_names (CUI_CALL_ROSTER (data));
+}
+
+
+static void
+on_calls_proxy_ready (GObject *source, GAsyncResult *result, gpointer data)
+{
+  CuiCallRoster *self = data;
+  g_autoptr (GError) error = NULL;
+
+  self->calls_proxy = g_dbus_proxy_new_for_bus_finish (result, &error);
+  if (!self->calls_proxy) {
+    g_debug ("No call name provider: %s", error->message);
+    return;
+  }
+
+  self->bus = g_dbus_proxy_get_connection (self->calls_proxy);
+  self->watch_id = g_dbus_connection_signal_subscribe (self->bus,
+                                                       CALLS_BUS_NAME,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       G_DBUS_SIGNAL_FLAGS_NONE,
+                                                       on_calls_signal,
+                                                       self,
+                                                       NULL);
+  refresh_names (self);
+}
+
+
 static void
 cui_call_roster_dispose (GObject *object)
 {
   CuiCallRoster *self = CUI_CALL_ROSTER (object);
 
+  if (self->watch_id) {
+    g_dbus_connection_signal_unsubscribe (self->bus, self->watch_id);
+    self->watch_id = 0;
+  }
+
   g_clear_object (&self->proxy);
+  g_clear_object (&self->calls_proxy);
   g_clear_pointer (&self->calls, g_ptr_array_unref);
+  g_clear_pointer (&self->names, g_hash_table_unref);
 
   G_OBJECT_CLASS (cui_call_roster_parent_class)->dispose (object);
 }
@@ -165,6 +307,8 @@ cui_call_roster_class_init (CuiCallRosterClass *klass)
 static void
 cui_call_roster_init (CuiCallRoster *self)
 {
+  self->names = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+
   g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
                             G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
                             NULL,
@@ -173,6 +317,16 @@ cui_call_roster_init (CuiCallRoster *self)
                             DAEMON_INTERFACE,
                             NULL,
                             on_proxy_ready,
+                            self);
+
+  g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
+                            G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+                            NULL,
+                            CALLS_BUS_NAME,
+                            CALLS_OBJECT_PATH,
+                            "org.freedesktop.DBus.ObjectManager",
+                            NULL,
+                            on_calls_proxy_ready,
                             self);
 }
 
@@ -263,6 +417,7 @@ cui_call_roster_refresh (CuiCallRoster *self)
   g_dbus_proxy_call (self->proxy, "GetTelephonyState", NULL,
                      G_DBUS_CALL_FLAGS_NONE, -1, NULL,
                      on_state_ready, self);
+  refresh_names (self);
 }
 
 

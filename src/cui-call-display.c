@@ -387,7 +387,7 @@ add_roster_row (CuiCallDisplay *self, CuiRosterCall *call)
   GtkWidget *swap = gtk_button_new ();
   GtkWidget *hang_up = gtk_button_new_from_icon_name ("call-stop-symbolic", GTK_ICON_SIZE_BUTTON);
   GtkWidget *text = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  GtkWidget *number = gtk_label_new (call->number);
+  GtkWidget *number = gtk_label_new (call->name ? call->name : call->number);
   GtkWidget *state = gtk_label_new (cui_call_roster_state_label (call->state));
 
   gtk_style_context_add_class (gtk_widget_get_style_context (state), "dim-label");
