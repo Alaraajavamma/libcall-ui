@@ -213,7 +213,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="actions_label">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Actions</property>
                       </object>
@@ -445,7 +445,7 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel">
+                          <object class="GtkLabel" id="hold_label">
                             <property name="visible">True</property>
                             <property name="label" translatable="yes">Hold</property>
                           </object>

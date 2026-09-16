@@ -21,6 +21,8 @@ call_ui_deps = [
 call_ui_private_sources = files(
   'cui-audio-router.c',
   'cui-audio-router.h',
+  'cui-call-roster.c',
+  'cui-call-roster.h',
   'cui-encryption-indicator.c',
   'cui-encryption-indicator-priv.h',
   'cui-keypad-button.c',
