@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:19+0300\n"
+"POT-Creation-Date: 2026-09-17 22:24+0300\n"
 "PO-Revision-Date: 2022-09-04 13:20+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -38,27 +38,27 @@ msgstr "Gelen arama"
 msgid "Call ended"
 msgstr "Arama bitti"
 
-#: src/cui-call.c:319 src/cui-call-display.c:1000
+#: src/cui-call.c:319 src/cui-call-display.c:998
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:116
 msgid "Accepting call…"
 msgstr "Arama kabul ediliyor…"
 
-#: src/cui-call-display.c:130
+#: src/cui-call-display.c:131
 msgid "Hanging up…"
 msgstr "Kapatılıyor…"
 
-#: src/cui-call-display.c:212
+#: src/cui-call-display.c:220
 msgid "Not connected"
 msgstr "Bağlı değil"
 
-#: src/cui-call-display.c:333
+#: src/cui-call-display.c:341
 msgid "Mute"
 msgstr "Sessiz"
 
-#: src/cui-call-display.c:352
+#: src/cui-call-display.c:360
 msgid "Muted"
 msgstr ""
 
@@ -66,93 +66,89 @@ msgstr ""
 msgid "Answer"
 msgstr "Yanıtla"
 
-#: src/cui-call-display.c:487
+#: src/cui-call-display.c:487 src/cui-call-display.ui:309
 msgid "Silence"
 msgstr "Sessize Al"
 
-#: src/cui-call-display.c:491
-msgid "Message"
-msgstr "Mesaj"
-
-#: src/cui-call-display.c:496 src/cui-call-display.c:749
+#: src/cui-call-display.c:491 src/cui-call-display.c:744
 msgid "Swap"
 msgstr "Değiştir"
 
-#: src/cui-call-display.c:501 src/cui-call-display.ui:93
+#: src/cui-call-display.c:496 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "Yanıtlamak mevcut aramayı beklemeye alır"
 
-#: src/cui-call-display.c:582
+#: src/cui-call-display.c:577
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:587
+#: src/cui-call-display.c:582
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:591
+#: src/cui-call-display.c:586
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:695
+#: src/cui-call-display.c:690
 msgid "Participants"
 msgstr "Katılımcılar"
 
-#: src/cui-call-display.c:718
+#: src/cui-call-display.c:713
 msgid "Private moves the others to hold"
 msgstr ""
 
-#: src/cui-call-display.c:730
+#: src/cui-call-display.c:725
 msgid "Conference Call"
 msgstr ""
 
-#: src/cui-call-display.c:740
+#: src/cui-call-display.c:735
 #, c-format
 msgid "%u participant"
 msgid_plural "%u participants"
 msgstr[0] ""
 
-#: src/cui-call-display.c:823
+#: src/cui-call-display.c:818
 msgid "Silenced Incoming Call"
 msgstr "Susturulan Gelen Arama"
 
-#: src/cui-call-display.c:830
+#: src/cui-call-display.c:828
 msgid "Hangup All Calls"
 msgstr "Tüm Aramaları Kapat"
 
-#: src/cui-call-display.c:830 src/cui-call-display.ui:297
+#: src/cui-call-display.c:828 src/cui-call-display.ui:330
 msgid "Hang Up"
 msgstr "Aramayı Kapat"
 
-#: src/cui-call-display.c:833
+#: src/cui-call-display.c:831
 msgid "Calls"
 msgstr "Aramalar"
 
-#: src/cui-call-display.c:837 src/cui-call-display.ui:246
+#: src/cui-call-display.c:835 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:843
+#: src/cui-call-display.c:841
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:843 src/cui-call-display.ui:478
+#: src/cui-call-display.c:841 src/cui-call-display.ui:511
 msgid "Hold"
 msgstr "Beklet"
 
-#: src/cui-call-display.c:966 src/cui-call-roster.c:571
+#: src/cui-call-display.c:964 src/cui-call-roster.c:518
 msgid "Incoming Call..."
 msgstr "Gelen Arama..."
 
-#: src/cui-call-display.c:970 src/cui-call-roster.c:567
+#: src/cui-call-display.c:968 src/cui-call-roster.c:514
 msgid "Dialing..."
 msgstr "Numara çevriliyor..."
 
-#: src/cui-call-display.c:974 src/cui-call-roster.c:565
+#: src/cui-call-display.c:972 src/cui-call-roster.c:512
 msgid "On Hold"
 msgstr "Beklemede"
 
-#: src/cui-call-display.c:978 src/cui-call-roster.c:575
+#: src/cui-call-display.c:976 src/cui-call-roster.c:522
 msgid "Disconnected"
 msgstr "Bağlantı kesildi"
 
@@ -168,11 +164,11 @@ msgstr "Mikrofon"
 msgid "Keypad"
 msgstr "Tuş Takımı"
 
-#: src/cui-call-display.ui:509
+#: src/cui-call-display.ui:542
 msgid "Add call"
 msgstr "Arama ekle"
 
-#: src/cui-call-display.ui:614
+#: src/cui-call-display.ui:647
 msgid "Turn to Speaker"
 msgstr ""
 
@@ -216,21 +212,23 @@ msgstr "Kablolu Mikrofon"
 msgid "Bluetooth Mic"
 msgstr "Bluetooth Mikrofon"
 
-#: src/cui-call-roster.c:449
-msgid "I can't talk right now."
-msgstr "Şu anda konuşamam."
-
-#: src/cui-call-roster.c:563
+#: src/cui-call-roster.c:510
 msgid "Active"
 msgstr "Etkin"
 
-#: src/cui-call-roster.c:569
+#: src/cui-call-roster.c:516
 msgid "Alerting..."
 msgstr "Çalıyor..."
 
-#: src/cui-call-roster.c:573
+#: src/cui-call-roster.c:520
 msgid "Waiting..."
 msgstr "Bekliyor..."
+
+#~ msgid "Message"
+#~ msgstr "Mesaj"
+
+#~ msgid "I can't talk right now."
+#~ msgstr "Şu anda konuşamam."
 
 #~ msgid "Incoming phone call"
 #~ msgstr "Gelen telefon araması"

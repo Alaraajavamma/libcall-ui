@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:19+0300\n"
+"POT-Creation-Date: 2026-09-17 22:24+0300\n"
 "PO-Revision-Date: 2023-05-29 22:09+0200\n"
 "Last-Translator: maite guix <maite.guix@me.com>\n"
 "Language-Team: Catalan <gnome@llistes.softcatala.org>\n"
@@ -37,27 +37,27 @@ msgstr "Trucada entrant"
 msgid "Call ended"
 msgstr "La trucada ha finalitzat"
 
-#: src/cui-call.c:319 src/cui-call-display.c:1000
+#: src/cui-call.c:319 src/cui-call-display.c:998
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:116
 msgid "Accepting call…"
 msgstr "S'està acceptant la trucada…"
 
-#: src/cui-call-display.c:130
+#: src/cui-call-display.c:131
 msgid "Hanging up…"
 msgstr "S'està penjant…"
 
-#: src/cui-call-display.c:212
+#: src/cui-call-display.c:220
 msgid "Not connected"
 msgstr "No connectat"
 
-#: src/cui-call-display.c:333
+#: src/cui-call-display.c:341
 msgid "Mute"
 msgstr "Silencia"
 
-#: src/cui-call-display.c:352
+#: src/cui-call-display.c:360
 msgid "Muted"
 msgstr ""
 
@@ -65,94 +65,90 @@ msgstr ""
 msgid "Answer"
 msgstr "Contesta"
 
-#: src/cui-call-display.c:487
+#: src/cui-call-display.c:487 src/cui-call-display.ui:309
 msgid "Silence"
 msgstr "Silencia"
 
-#: src/cui-call-display.c:491
-msgid "Message"
-msgstr "Missatge"
-
-#: src/cui-call-display.c:496 src/cui-call-display.c:749
+#: src/cui-call-display.c:491 src/cui-call-display.c:744
 msgid "Swap"
 msgstr "Intercanvia"
 
-#: src/cui-call-display.c:501 src/cui-call-display.ui:93
+#: src/cui-call-display.c:496 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "En respondre, la trucada actual es posa en espera"
 
-#: src/cui-call-display.c:582
+#: src/cui-call-display.c:577
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:587
+#: src/cui-call-display.c:582
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:591
+#: src/cui-call-display.c:586
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:695
+#: src/cui-call-display.c:690
 msgid "Participants"
 msgstr "Participants"
 
-#: src/cui-call-display.c:718
+#: src/cui-call-display.c:713
 msgid "Private moves the others to hold"
 msgstr ""
 
-#: src/cui-call-display.c:730
+#: src/cui-call-display.c:725
 msgid "Conference Call"
 msgstr ""
 
-#: src/cui-call-display.c:740
+#: src/cui-call-display.c:735
 #, c-format
 msgid "%u participant"
 msgid_plural "%u participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/cui-call-display.c:823
+#: src/cui-call-display.c:818
 msgid "Silenced Incoming Call"
 msgstr "Trucada entrant silenciada"
 
-#: src/cui-call-display.c:830
+#: src/cui-call-display.c:828
 msgid "Hangup All Calls"
 msgstr "Penja totes les trucades"
 
-#: src/cui-call-display.c:830 src/cui-call-display.ui:297
+#: src/cui-call-display.c:828 src/cui-call-display.ui:330
 msgid "Hang Up"
 msgstr "Penja"
 
-#: src/cui-call-display.c:833
+#: src/cui-call-display.c:831
 msgid "Calls"
 msgstr "Trucades"
 
-#: src/cui-call-display.c:837 src/cui-call-display.ui:246
+#: src/cui-call-display.c:835 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:843
+#: src/cui-call-display.c:841
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:843 src/cui-call-display.ui:478
+#: src/cui-call-display.c:841 src/cui-call-display.ui:511
 msgid "Hold"
 msgstr "Posa en espera"
 
-#: src/cui-call-display.c:966 src/cui-call-roster.c:571
+#: src/cui-call-display.c:964 src/cui-call-roster.c:518
 msgid "Incoming Call..."
 msgstr "Trucada entrant..."
 
-#: src/cui-call-display.c:970 src/cui-call-roster.c:567
+#: src/cui-call-display.c:968 src/cui-call-roster.c:514
 msgid "Dialing..."
 msgstr "Marcant..."
 
-#: src/cui-call-display.c:974 src/cui-call-roster.c:565
+#: src/cui-call-display.c:972 src/cui-call-roster.c:512
 msgid "On Hold"
 msgstr "En espera"
 
-#: src/cui-call-display.c:978 src/cui-call-roster.c:575
+#: src/cui-call-display.c:976 src/cui-call-roster.c:522
 msgid "Disconnected"
 msgstr "Desconnectada"
 
@@ -168,11 +164,11 @@ msgstr "Micròfon"
 msgid "Keypad"
 msgstr "Teclat numèric"
 
-#: src/cui-call-display.ui:509
+#: src/cui-call-display.ui:542
 msgid "Add call"
 msgstr "Afegeix una trucada"
 
-#: src/cui-call-display.ui:614
+#: src/cui-call-display.ui:647
 msgid "Turn to Speaker"
 msgstr ""
 
@@ -216,21 +212,23 @@ msgstr "Micròfon amb cable"
 msgid "Bluetooth Mic"
 msgstr "Micròfon Bluetooth"
 
-#: src/cui-call-roster.c:449
-msgid "I can't talk right now."
-msgstr "Ara mateix no puc parlar."
-
-#: src/cui-call-roster.c:563
+#: src/cui-call-roster.c:510
 msgid "Active"
 msgstr "Activa"
 
-#: src/cui-call-roster.c:569
+#: src/cui-call-roster.c:516
 msgid "Alerting..."
 msgstr "Sonant..."
 
-#: src/cui-call-roster.c:573
+#: src/cui-call-roster.c:520
 msgid "Waiting..."
 msgstr "Esperant..."
+
+#~ msgid "Message"
+#~ msgstr "Missatge"
+
+#~ msgid "I can't talk right now."
+#~ msgstr "Ara mateix no puc parlar."
 
 #~ msgid "Dial Pad"
 #~ msgstr "Teclat"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:19+0300\n"
+"POT-Creation-Date: 2026-09-17 22:24+0300\n"
 "PO-Revision-Date: 2022-10-02 21:46+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -39,27 +39,27 @@ msgstr "Eingehender Anruf"
 msgid "Call ended"
 msgstr "Anruf beendet"
 
-#: src/cui-call.c:319 src/cui-call-display.c:1000
+#: src/cui-call.c:319 src/cui-call-display.c:998
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:116
 msgid "Accepting call…"
 msgstr "Anruf annehmen …"
 
-#: src/cui-call-display.c:130
+#: src/cui-call-display.c:131
 msgid "Hanging up…"
 msgstr "Auflegen …"
 
-#: src/cui-call-display.c:212
+#: src/cui-call-display.c:220
 msgid "Not connected"
 msgstr "Nicht verbunden"
 
-#: src/cui-call-display.c:333
+#: src/cui-call-display.c:341
 msgid "Mute"
 msgstr "Stumm schalten"
 
-#: src/cui-call-display.c:352
+#: src/cui-call-display.c:360
 msgid "Muted"
 msgstr ""
 
@@ -67,94 +67,90 @@ msgstr ""
 msgid "Answer"
 msgstr "Annehmen"
 
-#: src/cui-call-display.c:487
+#: src/cui-call-display.c:487 src/cui-call-display.ui:309
 msgid "Silence"
 msgstr "Lautlos"
 
-#: src/cui-call-display.c:491
-msgid "Message"
-msgstr "Nachricht"
-
-#: src/cui-call-display.c:496 src/cui-call-display.c:749
+#: src/cui-call-display.c:491 src/cui-call-display.c:744
 msgid "Swap"
 msgstr "Tauschen"
 
-#: src/cui-call-display.c:501 src/cui-call-display.ui:93
+#: src/cui-call-display.c:496 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "Beim Annehmen wird der aktuelle Anruf gehalten"
 
-#: src/cui-call-display.c:582
+#: src/cui-call-display.c:577
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:587
+#: src/cui-call-display.c:582
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:591
+#: src/cui-call-display.c:586
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:695
+#: src/cui-call-display.c:690
 msgid "Participants"
 msgstr "Teilnehmer"
 
-#: src/cui-call-display.c:718
+#: src/cui-call-display.c:713
 msgid "Private moves the others to hold"
 msgstr ""
 
-#: src/cui-call-display.c:730
+#: src/cui-call-display.c:725
 msgid "Conference Call"
 msgstr ""
 
-#: src/cui-call-display.c:740
+#: src/cui-call-display.c:735
 #, c-format
 msgid "%u participant"
 msgid_plural "%u participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/cui-call-display.c:823
+#: src/cui-call-display.c:818
 msgid "Silenced Incoming Call"
 msgstr "Eingehender Anruf stummgeschaltet"
 
-#: src/cui-call-display.c:830
+#: src/cui-call-display.c:828
 msgid "Hangup All Calls"
 msgstr "Alle Anrufe auflegen"
 
-#: src/cui-call-display.c:830 src/cui-call-display.ui:297
+#: src/cui-call-display.c:828 src/cui-call-display.ui:330
 msgid "Hang Up"
 msgstr "Auflegen"
 
-#: src/cui-call-display.c:833
+#: src/cui-call-display.c:831
 msgid "Calls"
 msgstr "Anrufe"
 
-#: src/cui-call-display.c:837 src/cui-call-display.ui:246
+#: src/cui-call-display.c:835 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:843
+#: src/cui-call-display.c:841
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:843 src/cui-call-display.ui:478
+#: src/cui-call-display.c:841 src/cui-call-display.ui:511
 msgid "Hold"
 msgstr "Halten"
 
-#: src/cui-call-display.c:966 src/cui-call-roster.c:571
+#: src/cui-call-display.c:964 src/cui-call-roster.c:518
 msgid "Incoming Call..."
 msgstr "Eingehender Anruf..."
 
-#: src/cui-call-display.c:970 src/cui-call-roster.c:567
+#: src/cui-call-display.c:968 src/cui-call-roster.c:514
 msgid "Dialing..."
 msgstr "Wählen..."
 
-#: src/cui-call-display.c:974 src/cui-call-roster.c:565
+#: src/cui-call-display.c:972 src/cui-call-roster.c:512
 msgid "On Hold"
 msgstr "In der Warteschleife"
 
-#: src/cui-call-display.c:978 src/cui-call-roster.c:575
+#: src/cui-call-display.c:976 src/cui-call-roster.c:522
 msgid "Disconnected"
 msgstr "Verbindung getrennt"
 
@@ -170,11 +166,11 @@ msgstr "Mikrofon"
 msgid "Keypad"
 msgstr "Nummernblock"
 
-#: src/cui-call-display.ui:509
+#: src/cui-call-display.ui:542
 msgid "Add call"
 msgstr "Anruf hinzufügen"
 
-#: src/cui-call-display.ui:614
+#: src/cui-call-display.ui:647
 msgid "Turn to Speaker"
 msgstr ""
 
@@ -218,21 +214,23 @@ msgstr "Kabelgebundenes Mikrofon"
 msgid "Bluetooth Mic"
 msgstr "Bluetooth-Mikrofon"
 
-#: src/cui-call-roster.c:449
-msgid "I can't talk right now."
-msgstr "Ich kann im Moment nicht reden."
-
-#: src/cui-call-roster.c:563
+#: src/cui-call-roster.c:510
 msgid "Active"
 msgstr "Aktiv"
 
-#: src/cui-call-roster.c:569
+#: src/cui-call-roster.c:516
 msgid "Alerting..."
 msgstr "Klingelt..."
 
-#: src/cui-call-roster.c:573
+#: src/cui-call-roster.c:520
 msgid "Waiting..."
 msgstr "Warten..."
+
+#~ msgid "Message"
+#~ msgstr "Nachricht"
+
+#~ msgid "I can't talk right now."
+#~ msgstr "Ich kann im Moment nicht reden."
 
 #~ msgid "Incoming phone call"
 #~ msgstr "Eingehender Telefonanruf"

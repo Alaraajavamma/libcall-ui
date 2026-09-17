@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:19+0300\n"
+"POT-Creation-Date: 2026-09-17 22:24+0300\n"
 "PO-Revision-Date: 2023-03-06 20:44+0000\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
@@ -36,27 +36,27 @@ msgstr "Sarrerako deia"
 msgid "Call ended"
 msgstr "Deia amaitu da"
 
-#: src/cui-call.c:319 src/cui-call-display.c:1000
+#: src/cui-call.c:319 src/cui-call-display.c:998
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:116
 msgid "Accepting call…"
 msgstr "Deia onartzen…"
 
-#: src/cui-call-display.c:130
+#: src/cui-call-display.c:131
 msgid "Hanging up…"
 msgstr "Esekitzen…"
 
-#: src/cui-call-display.c:212
+#: src/cui-call-display.c:220
 msgid "Not connected"
 msgstr "Konektatu gabe"
 
-#: src/cui-call-display.c:333
+#: src/cui-call-display.c:341
 msgid "Mute"
 msgstr "Mututu"
 
-#: src/cui-call-display.c:352
+#: src/cui-call-display.c:360
 msgid "Muted"
 msgstr ""
 
@@ -64,94 +64,90 @@ msgstr ""
 msgid "Answer"
 msgstr "Erantzun"
 
-#: src/cui-call-display.c:487
+#: src/cui-call-display.c:487 src/cui-call-display.ui:309
 msgid "Silence"
 msgstr "Isilarazi"
 
-#: src/cui-call-display.c:491
-msgid "Message"
-msgstr "Mezua"
-
-#: src/cui-call-display.c:496 src/cui-call-display.c:749
+#: src/cui-call-display.c:491 src/cui-call-display.c:744
 msgid "Swap"
 msgstr "Trukatu"
 
-#: src/cui-call-display.c:501 src/cui-call-display.ui:93
+#: src/cui-call-display.c:496 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "Erantzuteak uneko deia zain jartzen du"
 
-#: src/cui-call-display.c:582
+#: src/cui-call-display.c:577
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:587
+#: src/cui-call-display.c:582
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:591
+#: src/cui-call-display.c:586
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:695
+#: src/cui-call-display.c:690
 msgid "Participants"
 msgstr "Kideak"
 
-#: src/cui-call-display.c:718
+#: src/cui-call-display.c:713
 msgid "Private moves the others to hold"
 msgstr ""
 
-#: src/cui-call-display.c:730
+#: src/cui-call-display.c:725
 msgid "Conference Call"
 msgstr ""
 
-#: src/cui-call-display.c:740
+#: src/cui-call-display.c:735
 #, c-format
 msgid "%u participant"
 msgid_plural "%u participants"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/cui-call-display.c:823
+#: src/cui-call-display.c:818
 msgid "Silenced Incoming Call"
 msgstr "Sarrerako deia isilduta"
 
-#: src/cui-call-display.c:830
+#: src/cui-call-display.c:828
 msgid "Hangup All Calls"
 msgstr "Eskegi denak"
 
-#: src/cui-call-display.c:830 src/cui-call-display.ui:297
+#: src/cui-call-display.c:828 src/cui-call-display.ui:330
 msgid "Hang Up"
 msgstr "Eskegi"
 
-#: src/cui-call-display.c:833
+#: src/cui-call-display.c:831
 msgid "Calls"
 msgstr "Deiak"
 
-#: src/cui-call-display.c:837 src/cui-call-display.ui:246
+#: src/cui-call-display.c:835 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:843
+#: src/cui-call-display.c:841
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:843 src/cui-call-display.ui:478
+#: src/cui-call-display.c:841 src/cui-call-display.ui:511
 msgid "Hold"
 msgstr "Jarri zain"
 
-#: src/cui-call-display.c:966 src/cui-call-roster.c:571
+#: src/cui-call-display.c:964 src/cui-call-roster.c:518
 msgid "Incoming Call..."
 msgstr "Deia sartzen..."
 
-#: src/cui-call-display.c:970 src/cui-call-roster.c:567
+#: src/cui-call-display.c:968 src/cui-call-roster.c:514
 msgid "Dialing..."
 msgstr "Markatzen..."
 
-#: src/cui-call-display.c:974 src/cui-call-roster.c:565
+#: src/cui-call-display.c:972 src/cui-call-roster.c:512
 msgid "On Hold"
 msgstr "Zain"
 
-#: src/cui-call-display.c:978 src/cui-call-roster.c:575
+#: src/cui-call-display.c:976 src/cui-call-roster.c:522
 msgid "Disconnected"
 msgstr "Deskonektatuta"
 
@@ -167,11 +163,11 @@ msgstr "Mikrofonoa"
 msgid "Keypad"
 msgstr "Teklatua"
 
-#: src/cui-call-display.ui:509
+#: src/cui-call-display.ui:542
 msgid "Add call"
 msgstr "Gehitu deia"
 
-#: src/cui-call-display.ui:614
+#: src/cui-call-display.ui:647
 msgid "Turn to Speaker"
 msgstr ""
 
@@ -215,21 +211,23 @@ msgstr "Kabledun mikrofonoa"
 msgid "Bluetooth Mic"
 msgstr "Bluetooth mikrofonoa"
 
-#: src/cui-call-roster.c:449
-msgid "I can't talk right now."
-msgstr "Ezin dut hitz egin orain."
-
-#: src/cui-call-roster.c:563
+#: src/cui-call-roster.c:510
 msgid "Active"
 msgstr "Aktibo"
 
-#: src/cui-call-roster.c:569
+#: src/cui-call-roster.c:516
 msgid "Alerting..."
 msgstr "Jotzen..."
 
-#: src/cui-call-roster.c:573
+#: src/cui-call-roster.c:520
 msgid "Waiting..."
 msgstr "Itxaroten..."
+
+#~ msgid "Message"
+#~ msgstr "Mezua"
+
+#~ msgid "I can't talk right now."
+#~ msgstr "Ezin dut hitz egin orain."
 
 #~ msgid "Dial Pad"
 #~ msgstr "Markatze-teklatua"

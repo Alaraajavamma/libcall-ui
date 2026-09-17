@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:19+0300\n"
+"POT-Creation-Date: 2026-09-17 22:24+0300\n"
 "PO-Revision-Date: 2022-09-02 14:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -39,27 +39,27 @@ msgstr "Dolazni poziv"
 msgid "Call ended"
 msgstr "Poziv završio"
 
-#: src/cui-call.c:319 src/cui-call-display.c:1000
+#: src/cui-call.c:319 src/cui-call-display.c:998
 msgid "Unknown"
 msgstr "Nepoznat"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:116
 msgid "Accepting call…"
 msgstr "Prihvati poziv…"
 
-#: src/cui-call-display.c:130
+#: src/cui-call-display.c:131
 msgid "Hanging up…"
 msgstr "Prekini poziv…"
 
-#: src/cui-call-display.c:212
+#: src/cui-call-display.c:220
 msgid "Not connected"
 msgstr "Nije povezano"
 
-#: src/cui-call-display.c:333
+#: src/cui-call-display.c:341
 msgid "Mute"
 msgstr "Utišaj"
 
-#: src/cui-call-display.c:352
+#: src/cui-call-display.c:360
 msgid "Muted"
 msgstr ""
 
@@ -67,47 +67,43 @@ msgstr ""
 msgid "Answer"
 msgstr "Odgovori"
 
-#: src/cui-call-display.c:487
+#: src/cui-call-display.c:487 src/cui-call-display.ui:309
 msgid "Silence"
 msgstr "Utišaj"
 
-#: src/cui-call-display.c:491
-msgid "Message"
-msgstr "Poruka"
-
-#: src/cui-call-display.c:496 src/cui-call-display.c:749
+#: src/cui-call-display.c:491 src/cui-call-display.c:744
 msgid "Swap"
 msgstr "Zamijeni"
 
-#: src/cui-call-display.c:501 src/cui-call-display.ui:93
+#: src/cui-call-display.c:496 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "Odgovaranje stavlja trenutni poziv na čekanje"
 
-#: src/cui-call-display.c:582
+#: src/cui-call-display.c:577
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:587
+#: src/cui-call-display.c:582
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:591
+#: src/cui-call-display.c:586
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:695
+#: src/cui-call-display.c:690
 msgid "Participants"
 msgstr "Sudionici"
 
-#: src/cui-call-display.c:718
+#: src/cui-call-display.c:713
 msgid "Private moves the others to hold"
 msgstr ""
 
-#: src/cui-call-display.c:730
+#: src/cui-call-display.c:725
 msgid "Conference Call"
 msgstr ""
 
-#: src/cui-call-display.c:740
+#: src/cui-call-display.c:735
 #, c-format
 msgid "%u participant"
 msgid_plural "%u participants"
@@ -115,47 +111,47 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/cui-call-display.c:823
+#: src/cui-call-display.c:818
 msgid "Silenced Incoming Call"
 msgstr "Utišani dolazni poziv"
 
-#: src/cui-call-display.c:830
+#: src/cui-call-display.c:828
 msgid "Hangup All Calls"
 msgstr "Prekini sve pozive"
 
-#: src/cui-call-display.c:830 src/cui-call-display.ui:297
+#: src/cui-call-display.c:828 src/cui-call-display.ui:330
 msgid "Hang Up"
 msgstr "Prekini poziv"
 
-#: src/cui-call-display.c:833
+#: src/cui-call-display.c:831
 msgid "Calls"
 msgstr "Pozivi"
 
-#: src/cui-call-display.c:837 src/cui-call-display.ui:246
+#: src/cui-call-display.c:835 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:843
+#: src/cui-call-display.c:841
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:843 src/cui-call-display.ui:478
+#: src/cui-call-display.c:841 src/cui-call-display.ui:511
 msgid "Hold"
 msgstr "Na čekanju"
 
-#: src/cui-call-display.c:966 src/cui-call-roster.c:571
+#: src/cui-call-display.c:964 src/cui-call-roster.c:518
 msgid "Incoming Call..."
 msgstr "Dolazni poziv..."
 
-#: src/cui-call-display.c:970 src/cui-call-roster.c:567
+#: src/cui-call-display.c:968 src/cui-call-roster.c:514
 msgid "Dialing..."
 msgstr "Biranje..."
 
-#: src/cui-call-display.c:974 src/cui-call-roster.c:565
+#: src/cui-call-display.c:972 src/cui-call-roster.c:512
 msgid "On Hold"
 msgstr "Na čekanju"
 
-#: src/cui-call-display.c:978 src/cui-call-roster.c:575
+#: src/cui-call-display.c:976 src/cui-call-roster.c:522
 msgid "Disconnected"
 msgstr "Prekinuto"
 
@@ -171,11 +167,11 @@ msgstr "Mikrofon"
 msgid "Keypad"
 msgstr "Tipkovnica"
 
-#: src/cui-call-display.ui:509
+#: src/cui-call-display.ui:542
 msgid "Add call"
 msgstr "Dodaj poziv"
 
-#: src/cui-call-display.ui:614
+#: src/cui-call-display.ui:647
 msgid "Turn to Speaker"
 msgstr ""
 
@@ -219,21 +215,23 @@ msgstr "Žičani mikrofon"
 msgid "Bluetooth Mic"
 msgstr "Bluetooth mikrofon"
 
-#: src/cui-call-roster.c:449
-msgid "I can't talk right now."
-msgstr "Ne mogu sada razgovarati."
-
-#: src/cui-call-roster.c:563
+#: src/cui-call-roster.c:510
 msgid "Active"
 msgstr "Aktivan"
 
-#: src/cui-call-roster.c:569
+#: src/cui-call-roster.c:516
 msgid "Alerting..."
 msgstr "Zvoni..."
 
-#: src/cui-call-roster.c:573
+#: src/cui-call-roster.c:520
 msgid "Waiting..."
 msgstr "Čekanje..."
+
+#~ msgid "Message"
+#~ msgstr "Poruka"
+
+#~ msgid "I can't talk right now."
+#~ msgstr "Ne mogu sada razgovarati."
 
 #~ msgid "Incoming phone call"
 #~ msgstr "Dolazni telefonski poziv"

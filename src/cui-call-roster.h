@@ -33,8 +33,6 @@ void           cui_call_roster_answer      (CuiCallRoster *self,
                                             const char    *path);
 void           cui_call_roster_silence     (CuiCallRoster *self);
 void           cui_call_roster_hang_up_all (CuiCallRoster *self);
-void           cui_call_roster_send_reply  (CuiCallRoster *self,
-                                            const char    *number);
 void           cui_call_roster_call_action (CuiCallRoster *self,
                                             const char    *action,
                                             const char    *path);
