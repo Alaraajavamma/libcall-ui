@@ -81,6 +81,7 @@ struct _CuiCallDisplay {
   GtkBox                 *box_speaker;
   GtkBox                 *box_mute;
   GtkBox                 *box_actions;
+  GtkBox                 *box_keypad;
   GtkEntry               *keypad_entry;
 
   CuiAudioRouter         *router;
@@ -339,6 +340,39 @@ on_router_changed (CuiCallDisplay *self)
 
   rebuild_output_sheet (self);
   rebuild_input_sheet (self);
+}
+
+
+/*
+ * The keypad is the tallest sheet and the only one whose height is fixed by
+ * its contents, so it sets the height the others are held to. Without this
+ * a sheet would resize as its rows are rebuilt, and the controls behind it
+ * would shift between one sheet and the next.
+ */
+static void
+match_sheet_heights (CuiCallDisplay *self)
+{
+  int minimum, natural, content;
+
+  gtk_widget_get_preferred_height (GTK_WIDGET (self->box_keypad), &minimum, &natural);
+
+  /* The preferred height counts the margins; a size request does not. */
+  content = natural
+            - gtk_widget_get_margin_top (GTK_WIDGET (self->box_keypad))
+            - gtk_widget_get_margin_bottom (GTK_WIDGET (self->box_keypad));
+  if (content <= 0)
+    return;
+
+  gtk_widget_set_size_request (GTK_WIDGET (self->box_speaker), -1, content);
+  gtk_widget_set_size_request (GTK_WIDGET (self->box_mute), -1, content);
+  gtk_widget_set_size_request (GTK_WIDGET (self->box_actions), -1, content);
+}
+
+
+static void
+on_display_mapped (CuiCallDisplay *self)
+{
+  match_sheet_heights (self);
 }
 
 
@@ -847,6 +881,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_speaker);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_actions);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_keypad);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, add_call);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
@@ -939,6 +974,8 @@ cui_call_display_init (CuiCallDisplay *self)
   self->router_changed_id = g_signal_connect_swapped (self->router, "changed",
                                                       G_CALLBACK (on_router_changed), self);
   on_router_changed (self);
+
+  g_signal_connect (self, "map", G_CALLBACK (on_display_mapped), NULL);
 
   self->roster = g_object_ref (cui_call_roster_get_default ());
   self->roster_changed_id = g_signal_connect_swapped (self->roster, "changed",
