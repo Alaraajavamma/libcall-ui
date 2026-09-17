@@ -234,7 +234,7 @@
                     <property name="spacing">10</property>
                     <property name="halign">center</property>
                     <child>
-                      <object class="GtkImage">
+                      <object class="GtkImage" id="actions_icon">
                         <property name="visible">True</property>
                         <property name="pixel-size">20</property>
                         <property name="icon-name">view-more-symbolic</property>

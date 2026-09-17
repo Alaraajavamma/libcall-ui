@@ -80,6 +80,7 @@ struct _CuiCallDisplay {
   GtkToggleButton        *hold;
   GtkLabel               *hold_label;
   GtkLabel               *actions_label;
+  GtkImage               *actions_icon;
   GtkBox                 *box_speaker;
   GtkBox                 *box_mute;
   GtkBox                 *box_actions;
@@ -762,6 +763,7 @@ on_roster_changed (CuiCallDisplay *self)
   guint others = 0;
   gboolean featured_seen = FALSE;
   gboolean featured_silenced = FALSE;
+  guint conference_legs = 0;
 
   gtk_container_foreach (GTK_CONTAINER (self->bg_calls),
                          (GtkCallback) gtk_widget_destroy, NULL);
@@ -800,6 +802,7 @@ on_roster_changed (CuiCallDisplay *self)
 
     if (legs->len) {
       add_conference_card (self, legs, conference_featured);
+      conference_legs = legs->len;
       others++;
     }
   }
@@ -827,13 +830,33 @@ on_roster_changed (CuiCallDisplay *self)
   gtk_label_set_label (self->hang_up_label,
                        count > 1 ? _("Hangup All Calls") : _("Hang Up"));
 
-  if (count > 1) {
+  /*
+   * The pill says what the sheet behind it holds, and wears the icon to
+   * match: participants of a conference, the calls on the line, or the
+   * things that can be done to the one call there is.
+   */
+  if (conference_legs) {
+    g_autofree char *label = g_strdup_printf ("%s · %u", _("Participants"), conference_legs);
+
+    gtk_image_set_from_icon_name (self->actions_icon, "system-users-symbolic",
+                                  GTK_ICON_SIZE_BUTTON);
+    gtk_label_set_label (self->actions_label, label);
+  } else if (count > 1) {
     g_autofree char *label = g_strdup_printf ("%s · %u", _("Calls"), count);
 
+    gtk_image_set_from_icon_name (self->actions_icon, "call-start-symbolic",
+                                  GTK_ICON_SIZE_BUTTON);
     gtk_label_set_label (self->actions_label, label);
   } else {
-    gtk_label_set_label (self->actions_label, _("Actions"));
+    g_autofree char *label = held ? g_strdup_printf ("%s · %s", _("Actions"), _("On Hold"))
+                                  : g_strdup (_("Actions"));
+
+    gtk_image_set_from_icon_name (self->actions_icon, "view-more-symbolic",
+                                  GTK_ICON_SIZE_BUTTON);
+    gtk_label_set_label (self->actions_label, label);
   }
+
+  gtk_image_set_pixel_size (self->actions_icon, 20);
 
   /* Swapping parks a lone call just as well as it trades two, so both qualify. */
   gtk_widget_set_sensitive (GTK_WIDGET (self->hold),
@@ -1246,6 +1269,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hold);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hold_label);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, actions_label);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, actions_icon);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_speaker);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_actions);
