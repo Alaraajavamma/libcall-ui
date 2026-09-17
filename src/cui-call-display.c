@@ -61,6 +61,7 @@ struct _CuiCallDisplay {
   GtkToggleButton        *mute;
   GtkLabel               *mute_label;
   GtkButton              *hang_up;
+  GtkLabel               *hang_up_label;
   GtkButton              *add_call;
   gboolean                allow_add_call;
   GtkButton              *answer;
@@ -82,6 +83,9 @@ struct _CuiCallDisplay {
   GtkBox                 *box_mute;
   GtkBox                 *box_actions;
   GtkBox                 *box_keypad;
+  GtkBox                 *bg_calls;
+  GtkWidget              *bg_scrolled;
+  GtkWidget              *answer_hint;
   GtkEntry               *keypad_entry;
 
   CuiAudioRouter         *router;
@@ -124,6 +128,12 @@ on_hang_up_clicked (CuiCallDisplay *self)
                        _("Hanging up…"));
 
   gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), FALSE);
+
+  /* The label says it ends every call when there is more than one, so it must. */
+  if (cui_call_roster_get_count (self->roster) > 1) {
+    cui_call_roster_hang_up_all (self->roster);
+    return;
+  }
 
   cui_call_hang_up (self->call);
 }
@@ -385,67 +395,111 @@ keypad_speaker_clicked_cb (CuiCallDisplay *self)
 
 
 static void
-roster_hang_up_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+bg_answer_clicked_cb (CuiCallDisplay *self, GtkButton *button)
 {
-  cui_call_roster_hang_up (self->roster, g_object_get_data (G_OBJECT (button), "call-path"));
+  cui_call_roster_answer (self->roster, g_object_get_data (G_OBJECT (button), "call-path"));
 }
 
 
 static void
-roster_swap_clicked_cb (CuiCallDisplay *self)
+bg_silence_clicked_cb (CuiCallDisplay *self)
+{
+  cui_call_roster_silence (self->roster);
+}
+
+
+static void
+bg_message_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+{
+  cui_call_roster_send_reply (self->roster,
+                              g_object_get_data (G_OBJECT (button), "call-number"));
+}
+
+
+static void
+bg_swap_clicked_cb (CuiCallDisplay *self)
 {
   cui_call_roster_swap (self->roster);
-  gtk_toggle_button_set_active (self->actions, FALSE);
+}
+
+
+static GtkWidget *
+add_card_button (CuiCallDisplay *self,
+                 GtkBox         *row,
+                 const char     *label,
+                 const char     *style,
+                 GCallback       callback)
+{
+  GtkWidget *button = gtk_button_new_with_label (label);
+
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "cui-card-action");
+  if (style)
+    gtk_style_context_add_class (gtk_widget_get_style_context (button), style);
+  g_signal_connect_swapped (button, "clicked", callback, self);
+  gtk_box_pack_start (row, button, TRUE, TRUE, 0);
+
+  return button;
 }
 
 
 /*
- * The rows for the other calls are rebuilt on every change, so only they are
- * taken down: hold and add-call come from the template and outlive them.
+ * Every call that is not the featured one gets a card above the caller, so a
+ * second caller is never hidden behind a sheet the ringing screen cannot even
+ * reach. A ringing card answers or silences; a parked one swaps.
  */
 static void
-clear_roster_rows (CuiCallDisplay *self)
+add_background_card (CuiCallDisplay *self, CuiRosterCall *call)
 {
-  g_autoptr (GList) children = gtk_container_get_children (GTK_CONTAINER (self->box_actions));
+  GtkWidget *card = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  GtkWidget *row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
+  GtkWidget *title, *number, *message;
+  g_autofree char *heading = NULL;
+  gboolean ringing = g_str_equal (call->state, "incoming") || g_str_equal (call->state, "waiting");
 
-  for (GList *l = children; l; l = l->next)
-    if (g_object_get_data (G_OBJECT (l->data), "roster-row"))
-      gtk_widget_destroy (GTK_WIDGET (l->data));
-}
+  heading = g_strdup_printf ("%s (%s)", call->name ? call->name : call->number,
+                             cui_call_roster_state_label (call->state));
+  title = gtk_label_new (heading);
+  gtk_label_set_ellipsize (GTK_LABEL (title), PANGO_ELLIPSIZE_END);
+  gtk_widget_set_halign (title, GTK_ALIGN_START);
+  gtk_style_context_add_class (gtk_widget_get_style_context (title), "cui-card-title");
+  gtk_box_pack_start (GTK_BOX (card), title, FALSE, FALSE, 0);
 
+  number = gtk_label_new (call->number);
+  gtk_label_set_ellipsize (GTK_LABEL (number), PANGO_ELLIPSIZE_END);
+  gtk_widget_set_halign (number, GTK_ALIGN_START);
+  gtk_style_context_add_class (gtk_widget_get_style_context (number), "dim-label");
+  gtk_box_pack_start (GTK_BOX (card), number, FALSE, FALSE, 0);
 
-static void
-add_roster_row (CuiCallDisplay *self, CuiRosterCall *call)
-{
-  GtkWidget *row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  GtkWidget *swap = gtk_button_new ();
-  GtkWidget *hang_up = gtk_button_new_from_icon_name ("call-stop-symbolic", GTK_ICON_SIZE_BUTTON);
-  GtkWidget *text = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  GtkWidget *number = gtk_label_new (call->name ? call->name : call->number);
-  GtkWidget *state = gtk_label_new (cui_call_roster_state_label (call->state));
+  gtk_box_set_homogeneous (GTK_BOX (row), TRUE);
+  if (ringing) {
+    GtkWidget *answer = add_card_button (self, GTK_BOX (row), _("Answer"), "cui-card-answer",
+                                         G_CALLBACK (bg_answer_clicked_cb));
 
-  gtk_style_context_add_class (gtk_widget_get_style_context (state), "dim-label");
-  gtk_box_pack_start (GTK_BOX (text), number, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (text), state, FALSE, FALSE, 0);
+    g_object_set_data_full (G_OBJECT (answer), "call-path", g_strdup (call->path), g_free);
+    add_card_button (self, GTK_BOX (row), _("Silence"), NULL,
+                     G_CALLBACK (bg_silence_clicked_cb));
 
-  gtk_container_add (GTK_CONTAINER (swap), text);
-  gtk_widget_set_size_request (swap, -1, 56);
-  gtk_widget_set_hexpand (swap, TRUE);
-  gtk_style_context_add_class (gtk_widget_get_style_context (swap), "cui-row-button");
-  g_signal_connect_swapped (swap, "clicked", G_CALLBACK (roster_swap_clicked_cb), self);
+    message = add_card_button (self, GTK_BOX (row), _("Message"), NULL,
+                               G_CALLBACK (bg_message_clicked_cb));
+    g_object_set_data_full (G_OBJECT (message), "call-number",
+                            g_strdup (call->number), g_free);
+  } else if (g_str_equal (call->state, "held")) {
+    add_card_button (self, GTK_BOX (row), _("Swap"), NULL, G_CALLBACK (bg_swap_clicked_cb));
+  }
+  gtk_box_pack_start (GTK_BOX (card), row, FALSE, FALSE, 0);
 
-  gtk_widget_set_size_request (hang_up, 56, 56);
-  gtk_style_context_add_class (gtk_widget_get_style_context (hang_up), "cui-row-button");
-  gtk_style_context_add_class (gtk_widget_get_style_context (hang_up), "cui-row-muted");
-  g_object_set_data_full (G_OBJECT (hang_up), "call-path", g_strdup (call->path), g_free);
-  g_signal_connect_swapped (hang_up, "clicked", G_CALLBACK (roster_hang_up_clicked_cb), self);
+  if (ringing) {
+    GtkWidget *hint = gtk_label_new (_("Answering holds the current call"));
 
-  gtk_box_pack_start (GTK_BOX (row), swap, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (row), hang_up, FALSE, FALSE, 0);
-  g_object_set_data (G_OBJECT (row), "roster-row", GINT_TO_POINTER (TRUE));
+    gtk_widget_set_halign (hint, GTK_ALIGN_START);
+    gtk_label_set_line_wrap (GTK_LABEL (hint), TRUE);
+    gtk_style_context_add_class (gtk_widget_get_style_context (hint), "dim-label");
+    gtk_box_pack_start (GTK_BOX (card), hint, FALSE, FALSE, 0);
+  }
 
-  gtk_box_pack_start (self->box_actions, row, FALSE, FALSE, 0);
-  gtk_widget_show_all (row);
+  gtk_style_context_add_class (gtk_widget_get_style_context (card), "cui-call-card");
+  gtk_box_pack_start (self->bg_calls, card, FALSE, FALSE, 0);
+  gtk_widget_show_all (card);
 }
 
 
@@ -457,17 +511,41 @@ on_roster_changed (CuiCallDisplay *self)
   CuiCallState state = self->call ? cui_call_get_state (self->call) : CUI_CALL_STATE_UNKNOWN;
   gboolean held = state == CUI_CALL_STATE_HELD;
   guint count = cui_call_roster_get_count (self->roster);
+  guint others = 0;
+  gboolean featured_seen = FALSE;
 
-  clear_roster_rows (self);
+  gtk_container_foreach (GTK_CONTAINER (self->bg_calls),
+                         (GtkCallback) gtk_widget_destroy, NULL);
 
+  /*
+   * CuiCall identifies itself by number, which is all there is to match the
+   * featured call on. Two calls can share a number, so only the first match
+   * is taken as the featured one; the rest are other calls and get cards.
+   */
   for (guint i = 0; calls && i < calls->len; i++) {
     CuiRosterCall *call = g_ptr_array_index (calls, i);
 
-    if (featured && g_str_equal (call->number, featured))
+    if (!featured_seen && featured && g_str_equal (call->number, featured)) {
+      featured_seen = TRUE;
       continue;
+    }
 
-    add_roster_row (self, call);
+    add_background_card (self, call);
+    others++;
   }
+
+  gtk_widget_set_visible (self->bg_scrolled, others > 0);
+
+  /*
+   * The ringing screen hides the controls, so when the incoming call is the
+   * featured one the warning has nowhere to sit but under its status.
+   */
+  gtk_widget_set_visible (self->answer_hint,
+                          state == CUI_CALL_STATE_INCOMING && count > 1);
+
+  /* One button ends one call; with a line waiting it ends the lot. */
+  gtk_label_set_label (self->hang_up_label,
+                       count > 1 ? _("Hangup All Calls") : _("Hang Up"));
 
   if (count > 1) {
     g_autofree char *label = g_strdup_printf ("%s · %u", _("Calls"), count);
@@ -882,6 +960,9 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_actions);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, box_keypad);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, bg_calls);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, bg_scrolled);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer_hint);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, add_call);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
@@ -892,6 +973,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, general_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, gsm_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up_label);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute_label);

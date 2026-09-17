@@ -28,6 +28,12 @@ guint          cui_call_roster_get_count   (CuiCallRoster *self);
 void           cui_call_roster_swap        (CuiCallRoster *self);
 void           cui_call_roster_hang_up     (CuiCallRoster *self,
                                             const char    *path);
+void           cui_call_roster_answer      (CuiCallRoster *self,
+                                            const char    *path);
+void           cui_call_roster_silence     (CuiCallRoster *self);
+void           cui_call_roster_hang_up_all (CuiCallRoster *self);
+void           cui_call_roster_send_reply  (CuiCallRoster *self,
+                                            const char    *number);
 void           cui_call_roster_refresh     (CuiCallRoster *self);
 
 const char    *cui_call_roster_state_label (const char *state);

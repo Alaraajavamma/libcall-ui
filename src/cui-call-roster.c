@@ -406,6 +406,94 @@ cui_call_roster_hang_up (CuiCallRoster *self, const char *path)
 }
 
 
+/* Answering a waiting call parks the one in progress; the modem does that. */
+void
+cui_call_roster_answer (CuiCallRoster *self, const char *path)
+{
+  g_return_if_fail (CUI_IS_CALL_ROSTER (self));
+
+  if (!self->proxy)
+    return;
+
+  g_dbus_proxy_call (self->proxy, "Answer", g_variant_new ("(s)", path),
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+}
+
+
+/*
+ * Telephony offers a picker when several quick responses are configured; the
+ * list lives in a json setting this has no parser for, so the single legacy
+ * message is used and the same wording stands in when nothing is set.
+ */
+static char *
+quick_response_text (void)
+{
+  GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
+  g_autoptr (GSettingsSchema) schema = NULL;
+  char *text = NULL;
+
+  if (source)
+    schema = g_settings_schema_source_lookup (source, "io.furios.Telephony", TRUE);
+
+  if (schema && g_settings_schema_has_key (schema, "reject-call-message")) {
+    g_autoptr (GSettings) settings = g_settings_new ("io.furios.Telephony");
+
+    text = g_settings_get_string (settings, "reject-call-message");
+  }
+
+  if (!text || !*text) {
+    g_free (text);
+    text = g_strdup (_("I can't talk right now."));
+  }
+
+  return text;
+}
+
+
+void
+cui_call_roster_send_reply (CuiCallRoster *self, const char *number)
+{
+  g_autofree char *text = NULL;
+
+  g_return_if_fail (CUI_IS_CALL_ROSTER (self));
+
+  if (!self->proxy || !number || !*number)
+    return;
+
+  text = quick_response_text ();
+  g_dbus_proxy_call (self->proxy, "SendTrackedSms",
+                     g_variant_new ("(ss)", number, text),
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+  cui_call_roster_silence (self);
+}
+
+
+void
+cui_call_roster_hang_up_all (CuiCallRoster *self)
+{
+  g_return_if_fail (CUI_IS_CALL_ROSTER (self));
+
+  if (!self->proxy)
+    return;
+
+  g_dbus_proxy_call (self->proxy, "HangupAll", NULL,
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+}
+
+
+void
+cui_call_roster_silence (CuiCallRoster *self)
+{
+  g_return_if_fail (CUI_IS_CALL_ROSTER (self));
+
+  if (!self->proxy)
+    return;
+
+  g_dbus_proxy_call (self->proxy, "SilenceRing", NULL,
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+}
+
+
 void
 cui_call_roster_refresh (CuiCallRoster *self)
 {
