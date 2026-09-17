@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-09-06 15:27+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-09-07 09:03+0200\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <српски <gnome-sr@googlegroups.org>>\n"
@@ -16,68 +15,146 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Позив је у току"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Позив је на чекању"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Позивам…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Долазни позив"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Позив је завршен"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Непознато"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Прихватам позив…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Прекидам…"
 
-#: src/cui-call-display.ui:28
-msgid "Incoming phone call"
-msgstr "Долазни телефонски позив"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Није повезано"
 
-#: src/cui-call-display.ui:194
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Утишано"
 
-#: src/cui-call-display.ui:210
-msgid "Speaker"
-msgstr "Звучник"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:226
-msgid "Add call"
-msgstr "Додај позив"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Одговори"
 
-#: src/cui-call-display.ui:276
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Утишај"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Порука"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Замени"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Одговарање ставља тренутни позив на чекање"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Прекини све позиве"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Прекини позив"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Позиви"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Задржи"
 
-#: src/cui-call-display.ui:318
-msgid "Dial Pad"
-msgstr "Бројчаник"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Долазни позив..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Позивање..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "На чекању"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Прекинуто"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Слушалица"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Микрофон"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Тастатура"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Додај позив"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -87,7 +164,7 @@ msgstr "Унеси број"
 msgid "Type a phone number"
 msgstr "Унеси број телефона"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Позови тај број телефона"
 
@@ -99,11 +176,50 @@ msgstr "Овај позив није шифрован"
 msgid "This call is encrypted"
 msgstr "Овај позив је шифрован"
 
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Звучник"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Жичане слушалице"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Жичани микрофон"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Bluetooth микрофон"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Не могу сада да причам."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Активан"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Звони..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Чекање..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Долазни телефонски позив"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Бројчаник"
+
 #~ msgid "Hang up"
 #~ msgstr "Прекини"
-
-#~ msgid "Answer"
-#~ msgstr "Одговори"
 
 #~ msgid "Hide the dial pad"
 #~ msgstr "Сакриј бројчаник"
@@ -128,9 +244,6 @@ msgstr "Овај позив је шифрован"
 
 #~ msgid "A simple dial pad to enter phone numbers."
 #~ msgstr "Једноставан бројчаник за унос телефонских бројева."
-
-#~ msgid "Keypad"
-#~ msgstr "Тастатура"
 
 #~ msgid "A number keypad."
 #~ msgstr "Бројевна тастатура."

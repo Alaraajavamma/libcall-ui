@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-10-05 19:19+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-10-19 15:22+0200\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
@@ -16,67 +15,144 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : "
-"2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Hovor aktivní"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Hovor přidržen"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Volání…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Příchozí hovor"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Hovor skončil"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Neznámé"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Přijímání hovoru…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Zavěšování…"
 
-#: src/cui-call-display.ui:28
-msgid "Incoming phone call"
-msgstr "Příchozí telefonní hovor"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Nepřipojeno"
 
-#: src/cui-call-display.ui:194
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Ztlumit"
 
-#: src/cui-call-display.ui:210
-msgid "Speaker"
-msgstr "Reproduktor"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:226
-msgid "Add call"
-msgstr "Přidat hovor"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Zvednout"
 
-#: src/cui-call-display.ui:276
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Ztišit"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Zpráva"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Prohodit"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Přijetím se současný hovor přidrží"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Zavěsit všechny hovory"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Zavěsit"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "hovory"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Přidržet"
 
-#: src/cui-call-display.ui:318
-msgid "Dial Pad"
-msgstr "Číselník"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Příchozí hovor..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Vytáčení..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "Přidržený"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Odpojeno"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Sluchátko"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Mikrofon"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Klávesnice"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Přidat hovor"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -86,7 +162,7 @@ msgstr "Zadejte číslo"
 msgid "Type a phone number"
 msgstr "Zadejte telefonní číslo"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Volat toto telefonní číslo"
 
@@ -97,3 +173,45 @@ msgstr "Tento hovor není zašifrován"
 #: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Tento hovor je zašifrován"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Reproduktor"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Drátová náhlavní souprava"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Drátový mikrofon"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Bluetooth mikrofon"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Teď nemůžu mluvit."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Aktivní"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Vyzvání..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Čekání..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Příchozí telefonní hovor"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Číselník"

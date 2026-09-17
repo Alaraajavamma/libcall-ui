@@ -8,9 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-09-02 12:31+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-09-03 17:16+0200\n"
 "Last-Translator: libre <eposta1@pm.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
@@ -22,74 +21,151 @@ msgstr ""
 "20)) ? 1 : 2);;\n"
 "X-Generator: Gtranslator 3.38.0\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Apel activ"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Apel în așteptare"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Sună…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Se primește apel"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Apel terminat"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Necunoscut"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Se acceptă apelul…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Se închide…"
 
-#: src/cui-call-display.ui:28
-msgid "Incoming phone call"
-msgstr "Se primește apel"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Neconectat"
 
-#: src/cui-call-display.ui:194
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Mut"
 
-#: src/cui-call-display.ui:210
-msgid "Speaker"
-msgstr "Difuzor"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:226
-msgid "Add call"
-msgstr "Adaugă un apel"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Răspundeți"
 
-#: src/cui-call-display.ui:276
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Silențios"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Mesaj"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Comutați"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Răspunsul pune apelul curent în așteptare"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Închideți toate apelurile"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Închideți"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Apeluri"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Așteptare"
 
-#: src/cui-call-display.ui:318
-msgid "Dial Pad"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Apel primit..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Se apelează..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "În așteptare"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Deconectat"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Casca telefonului"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Microfon"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
 msgstr "Tastatură"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Adaugă un apel"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
 msgstr "Introdu un număr"
 
 #: src/cui-dialpad.ui:25
-#| msgid "Enter a number"
 msgid "Type a phone number"
 msgstr "Introdu un număr de telefon"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Apelează acel număr de telefon"
 
@@ -100,3 +176,45 @@ msgstr "Acest apel nu este cifrat"
 #: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Acest apel este cifrat"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Difuzor"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Căști cu fir"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Microfon cu fir"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Microfon Bluetooth"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Nu pot vorbi acum."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Activ"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Sună..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Se așteaptă..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Se primește apel"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Tastatură"

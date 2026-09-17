@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2023-01-23 19:55+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2023-03-07 09:28+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
@@ -38,37 +37,121 @@ msgstr "Incoming call"
 msgid "Call ended"
 msgstr "Clamade finide"
 
-#: src/cui-call.c:319 src/cui-call-display.c:305
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "No cognossût"
 
-#: src/cui-call-display.c:99
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Daûr a rispuindi…"
 
-#: src/cui-call-display.c:114
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Daûr a meti jù…"
 
-#: src/cui-call-display.ui:182
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr ""
+
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Cidine"
 
-#: src/cui-call-display.ui:198
-msgid "Speaker"
-msgstr "Casse"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:214
-msgid "Add call"
-msgstr "Zonte clamade"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Rispuint"
 
-#: src/cui-call-display.ui:264
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr ""
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr ""
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr ""
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr ""
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr ""
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr ""
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr ""
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "In spiete"
 
-#: src/cui-call-display.ui:306
-msgid "Dial Pad"
-msgstr "Tastiere"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr ""
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr ""
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr ""
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr ""
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr ""
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr ""
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Tastierute"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Zonte clamade"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -89,6 +172,45 @@ msgstr "Cheste clamade no je cifrade"
 #: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Cheste clamade e je cifrade"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Casse"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr ""
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr ""
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr ""
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr ""
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr ""
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr ""
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr ""
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr ""
+
+#~ msgid "Dial Pad"
+#~ msgstr "Tastiere"
 
 #~ msgid "Call-UI Demo"
 #~ msgstr "Dimostrazion IU-Clamade"
@@ -112,9 +234,6 @@ msgstr "Cheste clamade e je cifrade"
 #~ msgid "A simple dial pad to enter phone numbers."
 #~ msgstr "Une semplice tastiere par inserî i numars di telefon."
 
-#~ msgid "Keypad"
-#~ msgstr "Tastierute"
-
 #~ msgid "A number keypad."
 #~ msgstr "Une tastierute numeriche."
 
@@ -126,9 +245,6 @@ msgstr "Cheste clamade e je cifrade"
 
 #~ msgid "Key pad"
 #~ msgstr "Tastiere"
-
-#~ msgid "Answer"
-#~ msgstr "Rispuint"
 
 #~ msgid "Hide the dial pad"
 #~ msgstr "Plate la tastiere"

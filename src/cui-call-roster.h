@@ -34,6 +34,10 @@ void           cui_call_roster_silence     (CuiCallRoster *self);
 void           cui_call_roster_hang_up_all (CuiCallRoster *self);
 void           cui_call_roster_send_reply  (CuiCallRoster *self,
                                             const char    *number);
+void           cui_call_roster_call_action (CuiCallRoster *self,
+                                            const char    *action,
+                                            const char    *path);
+gboolean       cui_call_roster_setting_on  (const char    *key);
 void           cui_call_roster_refresh     (CuiCallRoster *self);
 
 const char    *cui_call_roster_state_label (const char *state);

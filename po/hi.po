@@ -7,9 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-11-02 11:56+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-12-25 15:29+0530\n"
 "Last-Translator: Hemish <hemish04082005@gmail.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net https://indlinux."
@@ -41,37 +40,121 @@ msgstr "कॉल आ रही है"
 msgid "Call ended"
 msgstr "कॉल समाप्त"
 
-#: src/cui-call.c:319 src/cui-call-display.c:305
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "अज्ञात"
 
-#: src/cui-call-display.c:99
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "कॉल स्वीकार की जा रही है…"
 
-#: src/cui-call-display.c:114
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "कॉल समाप्त की जा रही है…"
 
-#: src/cui-call-display.ui:182
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "कनेक्ट नहीं है"
+
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "मौन करें"
 
-#: src/cui-call-display.ui:198
-msgid "Speaker"
-msgstr "स्पीकर"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:214
-msgid "Add call"
-msgstr "कॉल जोङें"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "जवाब दें"
 
-#: src/cui-call-display.ui:264
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "शांत करें"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "संदेश"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "स्वैप"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "जवाब देने पर वर्तमान कॉल होल्ड पर चली जाएगी"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "सभी कॉलों को हैंगअप करें"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "हैंगअप करें"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "कॉल"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "हॉल्ड करें"
 
-#: src/cui-call-display.ui:306
-msgid "Dial Pad"
-msgstr "डायल पैड"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "एक फोन आ रहा है..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "डायल किया जा रहा है..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "होल्ड पर"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "डिस्कनेक्ट हो गया"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "ईयरपीस"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "माइक्रोफ़ोन"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "कीपैड"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "कॉल जोङें"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -92,3 +175,42 @@ msgstr "यह कॉल इनक्रिप्टिड नहीं है"
 #: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "यह कॉल इनक्रिप्टिड है"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "स्पीकर"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "वायर्ड हेडसेट"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "वायर्ड माइक"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "ब्लूटूथ माइक"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "मैं अभी बात नहीं कर सकता."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "सक्रिय"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "घंटी बज रही है..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "प्रतीक्षा में..."
+
+#~ msgid "Dial Pad"
+#~ msgstr "डायल पैड"

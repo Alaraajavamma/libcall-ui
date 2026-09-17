@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-09-02 11:40+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-09-02 14:54+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -20,75 +19,141 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.1\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Вызов активен"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Удержание вызова"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Вызов…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Входящий вызов"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Вызов завершен"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Прием вызова…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Отключение…"
 
-#: src/cui-call-display.ui:35
-msgid "Incoming phone call"
-msgstr "Входящий телефонный вызов"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Не подключено"
 
-#: src/cui-call-display.ui:126
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Отключить звук"
 
-#: src/cui-call-display.ui:159
-msgid "Speaker"
-msgstr "Громкая связь"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:191
-msgid "Add call"
-msgstr "Добавить вызов"
-
-#: src/cui-call-display.ui:231
-msgid "Hold"
-msgstr "Удерживать"
-
-#: src/cui-call-display.ui:263
-msgid "Dial Pad"
-msgstr "Панель набора"
-
-#: src/cui-call-display.ui:311
-msgid "Hang up"
-msgstr "Отключиться"
-
-#: src/cui-call-display.ui:340
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
 msgid "Answer"
 msgstr "Ответить"
 
-#: src/cui-call-display.ui:415
-msgid "Hide the dial pad"
-msgstr "Скрыть панель набора"
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Без звука"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Сообщение"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Переключить"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Ответ переведёт текущий вызов на удержание"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Завершить все вызовы"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Завершить вызов"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Звонки"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
+msgid "Hold"
+msgstr "Удерживать"
+
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Входящий звонок..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Набор номера..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "На удержании"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Разъединено"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Разговорный динамик"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Микрофон"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Клавиатура"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Добавить вызов"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -98,14 +163,62 @@ msgstr "Ввести номер"
 msgid "Type a phone number"
 msgstr "Ввести номер телефона"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Вызов на этот номер телефона"
 
-#: src/cui-encryption-indicator.ui:20
+#: src/cui-encryption-indicator.ui:21
 msgid "This call is not encrypted"
 msgstr "Этот вызов не зашифрован"
 
-#: src/cui-encryption-indicator.ui:40
+#: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Этот вызов зашифрован"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Громкая связь"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Проводная гарнитура"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Проводной микрофон"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Микрофон Bluetooth"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Я не могу сейчас говорить."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Активный"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Вызов абонента..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Ожидание..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Входящий телефонный вызов"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Панель набора"
+
+#~ msgid "Hang up"
+#~ msgstr "Отключиться"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Скрыть панель набора"

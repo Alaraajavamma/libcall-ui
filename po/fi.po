@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-09-02 12:31+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-09-09 19:31+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
@@ -19,63 +18,141 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Puhelu aktiivisena"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Puhelu pidossa"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Soitetaan…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Saapuva puhelu"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Puhelu päättyi"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Hyväksytään puhelu…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Lopetetaan puhelu…"
 
-#: src/cui-call-display.ui:28
-msgid "Incoming phone call"
-msgstr "Saapuva puhelu"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Ei yhdistetty"
 
-#: src/cui-call-display.ui:194
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Mykistä"
 
-#: src/cui-call-display.ui:210
-msgid "Speaker"
-msgstr "Kaiutin"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:226
-msgid "Add call"
-msgstr "Lisää puhelu"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Vastaa"
 
-#: src/cui-call-display.ui:276
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Vaimenna"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Viesti"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Vaihda"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Vastaaminen asettaa nykyisen puhelun pitoon"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Lopeta kaikki puhelut"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Lopeta puhelu"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Puhelut"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Pitoon"
 
-#: src/cui-call-display.ui:318
-msgid "Dial Pad"
-msgstr "Numeronäppäimistö"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Puhelu saapuu..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Valitaan..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "Pidossa"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Päättynyt"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Kuuloke"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Mikrofoni"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Näppäimistö"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Lisää puhelu"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -85,7 +162,7 @@ msgstr "Anna numero"
 msgid "Type a phone number"
 msgstr "Kirjoita puhelinnumero"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Soita puhelinnumeroon"
 
@@ -97,11 +174,50 @@ msgstr "Tämä puhelu ei ole salattu"
 msgid "This call is encrypted"
 msgstr "Tämä puhelu on salattu"
 
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Kaiutin"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Langalliset kuulokkeet"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Langallinen mikrofoni"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Bluetooth-mikrofoni"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "En voi puhua juuri nyt."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Aktiivinen"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Hälyttää..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Odottaa..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Saapuva puhelu"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Numeronäppäimistö"
+
 #~ msgid "Hang up"
 #~ msgstr "Lopeta"
-
-#~ msgid "Answer"
-#~ msgstr "Vastaa"
 
 #~ msgid "Hide the dial pad"
 #~ msgstr "Piilota numeronäppäimistö"

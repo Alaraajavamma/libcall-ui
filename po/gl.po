@@ -7,9 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-01-31 18:37+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-02-04 16:22+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -25,125 +24,240 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 41.0\n"
 
-#: examples/cui-demo-window.ui:7 examples/cui-demo-window.ui:30
-msgid "Call-UI Demo"
-msgstr "Demostración de interface de chamada"
-
-#: examples/cui-demo-window.ui:138
-msgid "Back"
-msgstr "Atrás"
-
-#: examples/cui-demo-window.ui:190
-msgid "Welcome to Call-UI Demo"
-msgstr "Benvida á Demostración da IU de chamada"
-
-#: examples/cui-demo-window.ui:191
-msgid "This is a tour of the features the library has to offer."
-msgstr "Esta é unha demostración das características que a biblioteca ofrece."
-
-#: examples/cui-demo-window.ui:195
-msgid "Welcome"
-msgstr "Benvida"
-
-#: examples/cui-demo-window.ui:210
-msgid "Call Display"
-msgstr "Pantalla de chamada"
-
-#: examples/cui-demo-window.ui:223 examples/cui-demo-window.ui:249
-#: src/cui-call-display.ui:294
-msgid "Dial Pad"
-msgstr "Teclado telefónico"
-
-#: examples/cui-demo-window.ui:224
-msgid "A simple dial pad to enter phone numbers."
-msgstr "Un teclado telefónico sinxelo para escribir números de teléfono."
-
-#: examples/cui-demo-window.ui:263
-msgid "Keypad"
-msgstr "Teclado telefónico"
-
-#: examples/cui-demo-window.ui:264
-msgid "A number keypad."
-msgstr "Un teclado telefónico numérico."
-
-#: examples/cui-demo-window.ui:288
-msgid "Show letters"
-msgstr "Mostrar letras"
-
-#: examples/cui-demo-window.ui:303
-msgid "Show symbols"
-msgstr "Mostrar símbolos"
-
-#: examples/cui-demo-window.ui:365
-msgid "Key pad"
-msgstr "Teclado telefónico"
-
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Chamada activa"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Chamada en espera"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Chamando…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Chamada entrante"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Chamada finalizada"
 
-#: src/cui-call.c:323 src/cui-call-display.c:291
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Descoñecido"
 
-#: src/cui-call-display.ui:37
-msgid "Incoming phone call"
-msgstr "Chamada telefónica entrante"
+#: src/cui-call-display.c:115
+msgid "Accepting call…"
+msgstr ""
 
-#: src/cui-call-display.ui:140
+#: src/cui-call-display.c:130
+msgid "Hanging up…"
+msgstr ""
+
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Non conectado"
+
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Enmudecido"
 
-#: src/cui-call-display.ui:177
-msgid "Speaker"
-msgstr "Altofalante"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:213
-msgid "Add call"
-msgstr "Engadir chamada"
-
-#: src/cui-call-display.ui:258
-msgid "Hold"
-msgstr "Reter"
-
-#: src/cui-call-display.ui:350
-msgid "Hang up"
-msgstr "Colgar"
-
-#: src/cui-call-display.ui:381
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
 msgid "Answer"
 msgstr "Responder"
 
-#: src/cui-call-display.ui:463
-msgid "Hide the dial pad"
-msgstr "Ocultar teclado telefónico"
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Silenciar"
 
-#: src/cui-dialpad.ui:19
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Mensaxe"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Cambiar"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Ao responder ponse en espera a chamada actual"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Colgar todas as chamadas"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Colgar"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Chamadas"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
+msgid "Hold"
+msgstr "Reter"
+
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Chamada entrante..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Marcando..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "En espera"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Desconectada"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Auricular"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Micrófono"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Teclado telefónico"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Engadir chamada"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
+
+#: src/cui-dialpad.ui:24
 msgid "Enter a number"
 msgstr "Escriba un número"
 
-#: src/cui-encryption-indicator.ui:23
+#: src/cui-dialpad.ui:25
+msgid "Type a phone number"
+msgstr ""
+
+#: src/cui-dialpad.ui:50
+msgid "Call that phone number"
+msgstr ""
+
+#: src/cui-encryption-indicator.ui:21
 msgid "This call is not encrypted"
 msgstr "Esta chamada non está cifrada"
 
-#: src/cui-encryption-indicator.ui:45
+#: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Esta chamada está cifrada"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Altofalante"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Auriculares con cable"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Micrófono con cable"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Micrófono Bluetooth"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Non podo falar agora mesmo."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Activa"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Soando..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Agardando..."
+
+#~ msgid "Call-UI Demo"
+#~ msgstr "Demostración de interface de chamada"
+
+#~ msgid "Back"
+#~ msgstr "Atrás"
+
+#~ msgid "Welcome to Call-UI Demo"
+#~ msgstr "Benvida á Demostración da IU de chamada"
+
+#~ msgid "This is a tour of the features the library has to offer."
+#~ msgstr ""
+#~ "Esta é unha demostración das características que a biblioteca ofrece."
+
+#~ msgid "Welcome"
+#~ msgstr "Benvida"
+
+#~ msgid "Call Display"
+#~ msgstr "Pantalla de chamada"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Teclado telefónico"
+
+#~ msgid "A simple dial pad to enter phone numbers."
+#~ msgstr "Un teclado telefónico sinxelo para escribir números de teléfono."
+
+#~ msgid "A number keypad."
+#~ msgstr "Un teclado telefónico numérico."
+
+#~ msgid "Show letters"
+#~ msgstr "Mostrar letras"
+
+#~ msgid "Show symbols"
+#~ msgstr "Mostrar símbolos"
+
+#~ msgid "Key pad"
+#~ msgstr "Teclado telefónico"
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Chamada telefónica entrante"
+
+#~ msgid "Hang up"
+#~ msgstr "Colgar"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Ocultar teclado telefónico"

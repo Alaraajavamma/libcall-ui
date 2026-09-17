@@ -468,6 +468,49 @@ cui_call_roster_send_reply (CuiCallRoster *self, const char *number)
 }
 
 
+/*
+ * Merging, transferring and splitting all ride one owner method, which the
+ * modem may still refuse: many carriers do not carry these at all, which is
+ * why telephony keeps them behind settings that default to off.
+ */
+void
+cui_call_roster_call_action (CuiCallRoster *self, const char *action, const char *path)
+{
+  g_return_if_fail (CUI_IS_CALL_ROSTER (self));
+
+  if (!self->proxy)
+    return;
+
+  g_dbus_proxy_call (self->proxy, "CallAction",
+                     g_variant_new ("(ss)", action, path ? path : ""),
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+}
+
+
+/* The owner stores these as the strings "true" and "false", not as booleans. */
+gboolean
+cui_call_roster_setting_on (const char *key)
+{
+  GSettingsSchemaSource *source = g_settings_schema_source_get_default ();
+  g_autoptr (GSettingsSchema) schema = NULL;
+  g_autofree char *value = NULL;
+
+  if (source)
+    schema = g_settings_schema_source_lookup (source, "io.furios.Telephony", TRUE);
+
+  if (!schema || !g_settings_schema_has_key (schema, key))
+    return FALSE;
+
+  {
+    g_autoptr (GSettings) settings = g_settings_new ("io.furios.Telephony");
+
+    value = g_settings_get_string (settings, key);
+  }
+
+  return g_strcmp0 (value, "true") == 0;
+}
+
+
 void
 cui_call_roster_hang_up_all (CuiCallRoster *self)
 {
@@ -509,17 +552,24 @@ cui_call_roster_refresh (CuiCallRoster *self)
 }
 
 
+/* The wording is telephony's, so one phone says one thing about a call. */
 const char *
 cui_call_roster_state_label (const char *state)
 {
-  if (g_str_equal (state, "held"))
-    return _("On Hold");
   if (g_str_equal (state, "active"))
     return _("Active");
-  if (g_str_equal (state, "dialing") || g_str_equal (state, "alerting"))
-    return _("Calling");
-  if (g_str_equal (state, "incoming") || g_str_equal (state, "waiting"))
-    return _("Incoming");
+  if (g_str_equal (state, "held"))
+    return _("On Hold");
+  if (g_str_equal (state, "dialing"))
+    return _("Dialing...");
+  if (g_str_equal (state, "alerting"))
+    return _("Alerting...");
+  if (g_str_equal (state, "incoming"))
+    return _("Incoming Call...");
+  if (g_str_equal (state, "waiting"))
+    return _("Waiting...");
+  if (g_str_equal (state, "disconnected"))
+    return _("Disconnected");
 
   return state;
 }

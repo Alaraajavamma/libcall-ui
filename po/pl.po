@@ -7,9 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-09-02 12:31+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-09-04 13:23+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
@@ -20,63 +19,141 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Połączenie jest aktywne"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Połączenie jest zawieszone"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Dzwonienie…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Połączenie przychodzące"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Połączenie zostało zakończone"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Odbieranie połączenia…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Rozłączanie się…"
 
-#: src/cui-call-display.ui:28
-msgid "Incoming phone call"
-msgstr "Przychodzące połączenie telefoniczne"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Nie połączono"
 
-#: src/cui-call-display.ui:194
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Wycisz"
 
-#: src/cui-call-display.ui:210
-msgid "Speaker"
-msgstr "Głośnik"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:226
-msgid "Add call"
-msgstr "Dodaj połączenie"
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+msgid "Answer"
+msgstr "Odbierz"
 
-#: src/cui-call-display.ui:276
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Wycisz"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Wiadomość"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Przełącz"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Odebranie wstrzyma bieżące połączenie"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Rozłącz wszystkie połączenia"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Rozłącz"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Połączenia"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Zawieś"
 
-#: src/cui-call-display.ui:318
-msgid "Dial Pad"
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Połączenie przychodzące..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Wybieranie numeru..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "Wstrzymane"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Rozłączono"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Słuchawka"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Mikrofon"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
 msgstr "Klawiatura"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Dodaj połączenie"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
@@ -86,7 +163,7 @@ msgstr "Wpisz numer"
 msgid "Type a phone number"
 msgstr "Wpisz numer telefonu"
 
-#: src/cui-dialpad.ui:49
+#: src/cui-dialpad.ui:50
 msgid "Call that phone number"
 msgstr "Dzwoni na ten numer telefonu"
 
@@ -97,3 +174,45 @@ msgstr "To połączenie nie jest zaszyfrowane"
 #: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "To połączenie jest zaszyfrowane"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Głośnik"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Przewodowy zestaw słuchawkowy"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Mikrofon przewodowy"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Mikrofon Bluetooth"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Nie mogę teraz rozmawiać."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Aktywne"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Dzwonienie..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Oczekiwanie..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Przychodzące połączenie telefoniczne"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Klawiatura"

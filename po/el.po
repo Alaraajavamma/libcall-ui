@@ -6,9 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
-"issues/\n"
-"POT-Creation-Date: 2022-07-08 20:58+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 22:12+0300\n"
 "PO-Revision-Date: 2022-07-11 23:09+0300\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek <gnome-el-list@gnome.org>\n"
@@ -19,84 +18,206 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1\n"
 
-#: src/cui-call.c:310
+#: src/cui-call.c:308
 msgid "Call active"
 msgstr "Ενεργός κλήση"
 
-#: src/cui-call.c:312
+#: src/cui-call.c:310
 msgid "Call held"
 msgstr "Η κλήση πραγματοποιήθηκε"
 
-#. Deprecated
-#: src/cui-call.c:315
+#: src/cui-call.c:312
 msgid "Calling…"
 msgstr "Γίνεται κλήση…"
 
-#. Deprecated
-#: src/cui-call.c:318
+#: src/cui-call.c:314
 msgid "Incoming call"
 msgstr "Εισερχόμενη κλήση"
 
-#: src/cui-call.c:320
+#: src/cui-call.c:316
 msgid "Call ended"
 msgstr "Η κλήση τερματίστηκε"
 
-#: src/cui-call.c:323 src/cui-call-display.c:319
+#: src/cui-call.c:319 src/cui-call-display.c:855
 msgid "Unknown"
 msgstr "'Αγνωστο"
 
-#: src/cui-call-display.c:100
+#: src/cui-call-display.c:115
 msgid "Accepting call…"
 msgstr "Αποδοχή κλήσεων…"
 
-#: src/cui-call-display.c:115
+#: src/cui-call-display.c:130
 msgid "Hanging up…"
 msgstr "Γίνεται τερματισμός κλήσης…"
 
-#: src/cui-call-display.ui:39
-msgid "Incoming phone call"
-msgstr "Εισερχόμενη κλήση"
+#: src/cui-call-display.c:212
+msgid "Not connected"
+msgstr "Μη συνδεδεμένο"
 
-#: src/cui-call-display.ui:140
+#: src/cui-call-display.c:327
 msgid "Mute"
 msgstr "Σίγαση"
 
-#: src/cui-call-display.ui:177
-msgid "Speaker"
-msgstr "Ηχείο"
+#: src/cui-call-display.c:346
+msgid "Muted"
+msgstr ""
 
-#: src/cui-call-display.ui:213
-msgid "Add call"
-msgstr "Προσθήκη κλήσης"
-
-#: src/cui-call-display.ui:258
-msgid "Hold"
-msgstr "Αναμονή"
-
-#: src/cui-call-display.ui:294
-msgid "Dial Pad"
-msgstr "Πληκτρολόγιο κλήσης"
-
-#: src/cui-call-display.ui:346
-msgid "Hang up"
-msgstr "Τερματισμός κλήσης"
-
-#: src/cui-call-display.ui:377
+#: src/cui-call-display.c:477 src/cui-call-display.ui:277
 msgid "Answer"
 msgstr "Απάντηση"
 
-#: src/cui-call-display.ui:459
-msgid "Hide the dial pad"
-msgstr "Απόκρυψη πληκτρολογίου κλήσης"
+#: src/cui-call-display.c:481
+msgid "Silence"
+msgstr "Σίγαση"
+
+#: src/cui-call-display.c:484
+msgid "Message"
+msgstr "Μήνυμα"
+
+#: src/cui-call-display.c:489
+msgid "Swap"
+msgstr "Εναλλαγή"
+
+#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+msgid "Answering holds the current call"
+msgstr "Η απάντηση θέτει την τρέχουσα κλήση σε αναμονή"
+
+#: src/cui-call-display.c:575
+msgid "Swap Calls"
+msgstr ""
+
+#: src/cui-call-display.c:580
+msgid "Merge Calls"
+msgstr ""
+
+#: src/cui-call-display.c:584
+msgid "Transfer"
+msgstr ""
+
+#: src/cui-call-display.c:685
+msgid "Hangup All Calls"
+msgstr "Κλείσιμο όλων"
+
+#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+msgid "Hang Up"
+msgstr "Κλείσιμο"
+
+#: src/cui-call-display.c:688
+msgid "Calls"
+msgstr "Κλήσεις"
+
+#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+msgid "Actions"
+msgstr ""
+
+#: src/cui-call-display.c:698
+msgid "Resume"
+msgstr ""
+
+#: src/cui-call-display.c:698 src/cui-call-display.ui:478
+msgid "Hold"
+msgstr "Αναμονή"
+
+#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+msgid "Incoming Call..."
+msgstr "Κλήση..."
+
+#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+msgid "Dialing..."
+msgstr "Γίνεται κλήση..."
+
+#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+msgid "On Hold"
+msgstr "Σε αναμονή"
+
+#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+msgid "Disconnected"
+msgstr "Αποσυνδέθηκε"
+
+#: src/cui-call-display.ui:143 src/cui-audio-router.c:385
+msgid "Earpiece"
+msgstr "Ακουστικό"
+
+#: src/cui-call-display.ui:176 src/cui-audio-router.c:415
+msgid "Microphone"
+msgstr "Μικρόφωνο"
+
+#: src/cui-call-display.ui:216
+msgid "Keypad"
+msgstr "Πληκτρολόγιο"
+
+#: src/cui-call-display.ui:509
+msgid "Add call"
+msgstr "Προσθήκη κλήσης"
+
+#: src/cui-call-display.ui:614
+msgid "Turn to Speaker"
+msgstr ""
 
 #: src/cui-dialpad.ui:24
 msgid "Enter a number"
 msgstr "Πληκτρολογήστε έναν αριθμό"
 
-#: src/cui-encryption-indicator.ui:23
+#: src/cui-dialpad.ui:25
+msgid "Type a phone number"
+msgstr ""
+
+#: src/cui-dialpad.ui:50
+msgid "Call that phone number"
+msgstr ""
+
+#: src/cui-encryption-indicator.ui:21
 msgid "This call is not encrypted"
 msgstr "Η κλήση δεν είναι κρυπτογραφημένη"
 
-#: src/cui-encryption-indicator.ui:45
+#: src/cui-encryption-indicator.ui:42
 msgid "This call is encrypted"
 msgstr "Η κλήση είναι κρυπτογραφημένη"
+
+#: src/cui-audio-router.c:387
+msgid "Speaker"
+msgstr "Ηχείο"
+
+#: src/cui-audio-router.c:389
+msgid "Wired Headset"
+msgstr "Ενσύρματα ακουστικά"
+
+#: src/cui-audio-router.c:391
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
+#: src/cui-audio-router.c:417
+msgid "Wired Mic"
+msgstr "Ενσύρματο μικρόφωνο"
+
+#: src/cui-audio-router.c:419
+msgid "Bluetooth Mic"
+msgstr "Μικρόφωνο Bluetooth"
+
+#: src/cui-call-roster.c:446
+msgid "I can't talk right now."
+msgstr "Δεν μπορώ να μιλήσω τώρα."
+
+#: src/cui-call-roster.c:560
+msgid "Active"
+msgstr "Ενεργή"
+
+#: src/cui-call-roster.c:566
+msgid "Alerting..."
+msgstr "Χτυπάει..."
+
+#: src/cui-call-roster.c:570
+msgid "Waiting..."
+msgstr "Αναμονή..."
+
+#~ msgid "Incoming phone call"
+#~ msgstr "Εισερχόμενη κλήση"
+
+#~ msgid "Dial Pad"
+#~ msgstr "Πληκτρολόγιο κλήσης"
+
+#~ msgid "Hang up"
+#~ msgstr "Τερματισμός κλήσης"
+
+#~ msgid "Hide the dial pad"
+#~ msgstr "Απόκρυψη πληκτρολογίου κλήσης"

@@ -84,6 +84,8 @@ struct _CuiCallDisplay {
   GtkBox                 *box_actions;
   GtkBox                 *box_keypad;
   GtkBox                 *bg_calls;
+  GtkLabel               *strip_name[4];
+  GtkLabel               *strip_detail[4];
   GtkWidget              *bg_scrolled;
   GtkWidget              *answer_hint;
   GtkEntry               *keypad_entry;
@@ -228,6 +230,7 @@ add_sheet_row (CuiCallDisplay *self,
   if (available && callback)
     g_signal_connect_swapped (button, "clicked", callback, self);
 
+  g_object_set_data (G_OBJECT (button), "sheet-row", GINT_TO_POINTER (TRUE));
   gtk_box_pack_start (box, button, FALSE, FALSE, 0);
   gtk_widget_show_all (button);
 
@@ -235,13 +238,18 @@ add_sheet_row (CuiCallDisplay *self,
 }
 
 
+/*
+ * Rebuilt rows are tagged, because the chevron and the caller strip share the
+ * box with them and must survive.
+ */
 static void
 clear_sheet_rows (GtkBox *box)
 {
   g_autoptr (GList) children = gtk_container_get_children (GTK_CONTAINER (box));
 
-  for (GList *l = children ? children->next : NULL; l; l = l->next)
-    gtk_widget_destroy (GTK_WIDGET (l->data));
+  for (GList *l = children; l; l = l->next)
+    if (g_object_get_data (G_OBJECT (l->data), "sheet-row"))
+      gtk_widget_destroy (GTK_WIDGET (l->data));
 }
 
 
@@ -504,6 +512,138 @@ add_background_card (CuiCallDisplay *self, CuiRosterCall *call)
 
 
 static void
+sheet_swap_clicked_cb (CuiCallDisplay *self)
+{
+  cui_call_roster_swap (self->roster);
+  gtk_toggle_button_set_active (self->actions, FALSE);
+}
+
+
+static void
+sheet_merge_clicked_cb (CuiCallDisplay *self)
+{
+  cui_call_roster_call_action (self->roster, "create_multiparty", NULL);
+  gtk_toggle_button_set_active (self->actions, FALSE);
+}
+
+
+static void
+sheet_transfer_clicked_cb (CuiCallDisplay *self)
+{
+  cui_call_roster_call_action (self->roster, "transfer", NULL);
+  gtk_toggle_button_set_active (self->actions, FALSE);
+}
+
+
+static GtkWidget *
+add_sheet_action (CuiCallDisplay *self, const char *icon, const char *label, GCallback callback)
+{
+  GtkWidget *button = add_sheet_row (self, self->box_actions, icon, label,
+                                     FALSE, TRUE, callback);
+
+  g_object_set_data (G_OBJECT (button), "sheet-action", GINT_TO_POINTER (TRUE));
+
+  return button;
+}
+
+
+/*
+ * With one call the sheet holds what can be done to it; with two it becomes
+ * the call sheet telephony shows, where swapping, merging and transferring
+ * live. Merge and transfer only make sense with one call up and one parked,
+ * and only when the settings admit the carrier supports them.
+ */
+static void
+rebuild_actions_sheet (CuiCallDisplay *self, CuiCallState state, guint count)
+{
+  GPtrArray *calls = cui_call_roster_get_calls (self->roster);
+  g_autoptr (GList) children = gtk_container_get_children (GTK_CONTAINER (self->box_actions));
+  gboolean held_single = FALSE;
+  gboolean multi = count > 1;
+
+  for (GList *l = children; l; l = l->next)
+    if (g_object_get_data (G_OBJECT (l->data), "sheet-action"))
+      gtk_widget_destroy (GTK_WIDGET (l->data));
+
+  for (guint i = 0; calls && i < calls->len; i++) {
+    CuiRosterCall *call = g_ptr_array_index (calls, i);
+
+    if (g_str_equal (call->state, "held") && !call->multiparty)
+      held_single = TRUE;
+  }
+
+  gtk_widget_set_visible (GTK_WIDGET (self->hold), !multi);
+  gtk_widget_set_visible (GTK_WIDGET (self->add_call), !multi);
+
+  if (!multi)
+    return;
+
+  add_sheet_action (self, "media-playlist-repeat-symbolic", _("Swap Calls"),
+                    G_CALLBACK (sheet_swap_clicked_cb));
+
+  if (state == CUI_CALL_STATE_ACTIVE && held_single) {
+    if (cui_call_roster_setting_on ("allow-conference-calls"))
+      add_sheet_action (self, "object-flip-horizontal-symbolic", _("Merge Calls"),
+                        G_CALLBACK (sheet_merge_clicked_cb));
+
+    if (cui_call_roster_setting_on ("allow-call-transfer"))
+      add_sheet_action (self, "send-to-symbolic", _("Transfer"),
+                        G_CALLBACK (sheet_transfer_clicked_cb));
+  }
+}
+
+
+/*
+ * Every sheet carries the caller it acts on, as the telephony window does,
+ * so a sheet opened over a call still says whose call it is. The text is
+ * taken from the labels the screen itself shows, which keeps the strip and
+ * the screen from ever disagreeing.
+ */
+static void
+add_caller_strip (CuiCallDisplay *self, GtkBox *box, guint slot)
+{
+  GtkWidget *strip = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+  GtkWidget *name = gtk_label_new (NULL);
+  GtkWidget *detail = gtk_label_new (NULL);
+
+  gtk_label_set_ellipsize (GTK_LABEL (name), PANGO_ELLIPSIZE_END);
+  gtk_style_context_add_class (gtk_widget_get_style_context (name), "cui-card-title");
+  gtk_label_set_ellipsize (GTK_LABEL (detail), PANGO_ELLIPSIZE_END);
+  gtk_style_context_add_class (gtk_widget_get_style_context (detail), "dim-label");
+
+  gtk_box_pack_start (GTK_BOX (strip), name, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (strip), detail, FALSE, FALSE, 0);
+  gtk_box_pack_start (box, strip, FALSE, FALSE, 0);
+  gtk_box_reorder_child (box, strip, 1);
+  gtk_widget_show_all (strip);
+
+  self->strip_name[slot] = GTK_LABEL (name);
+  self->strip_detail[slot] = GTK_LABEL (detail);
+}
+
+
+static void
+update_caller_strips (CuiCallDisplay *self)
+{
+  const char *name = gtk_label_get_label (self->primary_contact_info);
+  const char *number = gtk_label_get_label (self->secondary_contact_info);
+  const char *status = gtk_label_get_label (self->status);
+  g_autofree char *detail = NULL;
+
+  if (!self->strip_name[0])
+    return;
+
+  detail = (number && *number) ? g_strdup_printf ("%s · %s", number, status ? status : "")
+                               : g_strdup (status ? status : "");
+
+  for (guint i = 0; i < G_N_ELEMENTS (self->strip_name); i++) {
+    gtk_label_set_label (self->strip_name[i], name ? name : "");
+    gtk_label_set_label (self->strip_detail[i], detail);
+  }
+}
+
+
+static void
 on_roster_changed (CuiCallDisplay *self)
 {
   GPtrArray *calls = cui_call_roster_get_calls (self->roster);
@@ -542,6 +682,9 @@ on_roster_changed (CuiCallDisplay *self)
    */
   gtk_widget_set_visible (self->answer_hint,
                           state == CUI_CALL_STATE_INCOMING && count > 1);
+
+  rebuild_actions_sheet (self, state, count);
+  update_caller_strips (self);
 
   /* One button ends one call; with a line waiting it ends the lot. */
   gtk_label_set_label (self->hang_up_label,
@@ -681,10 +824,19 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_INCOMING:
+    gtk_label_set_label (self->status, _("Incoming Call..."));
+    break;
+
   case CUI_CALL_STATE_CALLING:
+    gtk_label_set_label (self->status, _("Dialing..."));
+    break;
+
   case CUI_CALL_STATE_HELD:
+    gtk_label_set_label (self->status, _("On Hold"));
+    break;
+
   case CUI_CALL_STATE_DISCONNECTED:
-    gtk_label_set_label (self->status, cui_call_state_to_string (state));
+    gtk_label_set_label (self->status, _("Disconnected"));
     break;
 
   case CUI_CALL_STATE_UNKNOWN:
@@ -748,6 +900,7 @@ on_time_updated (CuiCallDisplay *self)
     return;
 
   set_pretty_time (self);
+  update_caller_strips (self);
 }
 
 
@@ -1051,6 +1204,11 @@ cui_call_display_init (CuiCallDisplay *self)
 {
   self->allow_add_call = TRUE;
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  add_caller_strip (self, self->box_speaker, 0);
+  add_caller_strip (self, self->box_mute, 1);
+  add_caller_strip (self, self->box_actions, 2);
+  add_caller_strip (self, self->box_keypad, 3);
 
   self->router = g_object_ref (cui_audio_router_get_default ());
   self->router_changed_id = g_signal_connect_swapped (self->router, "changed",
