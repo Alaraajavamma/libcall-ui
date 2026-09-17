@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:12+0300\n"
+"POT-Creation-Date: 2026-09-17 22:19+0300\n"
 "PO-Revision-Date: 2022-05-25 17:27+0200\n"
 "Last-Translator: Éloi Rivard <eloi.rivard@nubla.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
@@ -38,7 +38,7 @@ msgstr "Appel entrant"
 msgid "Call ended"
 msgstr "Appel terminé"
 
-#: src/cui-call.c:319 src/cui-call-display.c:855
+#: src/cui-call.c:319 src/cui-call-display.c:1000
 msgid "Unknown"
 msgstr "Inconnu"
 
@@ -54,83 +54,106 @@ msgstr ""
 msgid "Not connected"
 msgstr "Non connecté"
 
-#: src/cui-call-display.c:327
+#: src/cui-call-display.c:333
 msgid "Mute"
 msgstr "Muet"
 
-#: src/cui-call-display.c:346
+#: src/cui-call-display.c:352
 msgid "Muted"
 msgstr ""
 
-#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+#: src/cui-call-display.c:483 src/cui-call-display.ui:277
 msgid "Answer"
 msgstr "Répondre"
 
-#: src/cui-call-display.c:481
+#: src/cui-call-display.c:487
 msgid "Silence"
 msgstr "Silence"
 
-#: src/cui-call-display.c:484
+#: src/cui-call-display.c:491
 msgid "Message"
 msgstr "Message"
 
-#: src/cui-call-display.c:489
+#: src/cui-call-display.c:496 src/cui-call-display.c:749
 msgid "Swap"
 msgstr "Permuter"
 
-#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+#: src/cui-call-display.c:501 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "Répondre met l'appel en cours en attente"
 
-#: src/cui-call-display.c:575
+#: src/cui-call-display.c:582
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:580
+#: src/cui-call-display.c:587
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:584
+#: src/cui-call-display.c:591
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:685
+#: src/cui-call-display.c:695
+msgid "Participants"
+msgstr "Participants"
+
+#: src/cui-call-display.c:718
+msgid "Private moves the others to hold"
+msgstr ""
+
+#: src/cui-call-display.c:730
+msgid "Conference Call"
+msgstr ""
+
+#: src/cui-call-display.c:740
+#, c-format
+msgid "%u participant"
+msgid_plural "%u participants"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cui-call-display.c:823
+msgid "Silenced Incoming Call"
+msgstr "Appel silencieux"
+
+#: src/cui-call-display.c:830
 msgid "Hangup All Calls"
 msgstr "Tout raccrocher"
 
-#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+#: src/cui-call-display.c:830 src/cui-call-display.ui:297
 msgid "Hang Up"
 msgstr "Raccrocher"
 
-#: src/cui-call-display.c:688
+#: src/cui-call-display.c:833
 msgid "Calls"
 msgstr "Appels"
 
-#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+#: src/cui-call-display.c:837 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:698
+#: src/cui-call-display.c:843
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:698 src/cui-call-display.ui:478
+#: src/cui-call-display.c:843 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "Mettre en attente"
 
-#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+#: src/cui-call-display.c:966 src/cui-call-roster.c:571
 msgid "Incoming Call..."
 msgstr "Appel entrant..."
 
-#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+#: src/cui-call-display.c:970 src/cui-call-roster.c:567
 msgid "Dialing..."
 msgstr "Numérotation..."
 
-#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+#: src/cui-call-display.c:974 src/cui-call-roster.c:565
 msgid "On Hold"
 msgstr "En attente"
 
-#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+#: src/cui-call-display.c:978 src/cui-call-roster.c:575
 msgid "Disconnected"
 msgstr "Déconnecté"
 
@@ -194,19 +217,19 @@ msgstr "Micro filaire"
 msgid "Bluetooth Mic"
 msgstr "Micro Bluetooth"
 
-#: src/cui-call-roster.c:446
+#: src/cui-call-roster.c:449
 msgid "I can't talk right now."
 msgstr "Je ne peux pas parler là."
 
-#: src/cui-call-roster.c:560
+#: src/cui-call-roster.c:563
 msgid "Active"
 msgstr "En cours"
 
-#: src/cui-call-roster.c:566
+#: src/cui-call-roster.c:569
 msgid "Alerting..."
 msgstr "Sonnerie..."
 
-#: src/cui-call-roster.c:570
+#: src/cui-call-roster.c:573
 msgid "Waiting..."
 msgstr "En attente..."
 

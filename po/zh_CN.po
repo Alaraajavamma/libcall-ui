@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 22:12+0300\n"
+"POT-Creation-Date: 2026-09-17 22:19+0300\n"
 "PO-Revision-Date: 2023-07-13 17:05-0400\n"
 "Last-Translator: \n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
@@ -37,7 +37,7 @@ msgstr "来电"
 msgid "Call ended"
 msgstr "通话结束"
 
-#: src/cui-call.c:319 src/cui-call-display.c:855
+#: src/cui-call.c:319 src/cui-call-display.c:1000
 msgid "Unknown"
 msgstr "未知"
 
@@ -53,83 +53,106 @@ msgstr "正在挂断……"
 msgid "Not connected"
 msgstr "未连接"
 
-#: src/cui-call-display.c:327
+#: src/cui-call-display.c:333
 msgid "Mute"
 msgstr "静音"
 
-#: src/cui-call-display.c:346
+#: src/cui-call-display.c:352
 msgid "Muted"
 msgstr ""
 
-#: src/cui-call-display.c:477 src/cui-call-display.ui:277
+#: src/cui-call-display.c:483 src/cui-call-display.ui:277
 msgid "Answer"
 msgstr "接听"
 
-#: src/cui-call-display.c:481
+#: src/cui-call-display.c:487
 msgid "Silence"
 msgstr "静音"
 
-#: src/cui-call-display.c:484
+#: src/cui-call-display.c:491
 msgid "Message"
 msgstr "短信"
 
-#: src/cui-call-display.c:489
+#: src/cui-call-display.c:496 src/cui-call-display.c:749
 msgid "Swap"
 msgstr "切换"
 
-#: src/cui-call-display.c:494 src/cui-call-display.ui:93
+#: src/cui-call-display.c:501 src/cui-call-display.ui:93
 msgid "Answering holds the current call"
 msgstr "接听将保持当前通话"
 
-#: src/cui-call-display.c:575
+#: src/cui-call-display.c:582
 msgid "Swap Calls"
 msgstr ""
 
-#: src/cui-call-display.c:580
+#: src/cui-call-display.c:587
 msgid "Merge Calls"
 msgstr ""
 
-#: src/cui-call-display.c:584
+#: src/cui-call-display.c:591
 msgid "Transfer"
 msgstr ""
 
-#: src/cui-call-display.c:685
+#: src/cui-call-display.c:695
+msgid "Participants"
+msgstr "参加者"
+
+#: src/cui-call-display.c:718
+msgid "Private moves the others to hold"
+msgstr ""
+
+#: src/cui-call-display.c:730
+msgid "Conference Call"
+msgstr ""
+
+#: src/cui-call-display.c:740
+#, c-format
+msgid "%u participant"
+msgid_plural "%u participants"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/cui-call-display.c:823
+msgid "Silenced Incoming Call"
+msgstr "来电静音"
+
+#: src/cui-call-display.c:830
 msgid "Hangup All Calls"
 msgstr "挂断所有电话"
 
-#: src/cui-call-display.c:685 src/cui-call-display.ui:297
+#: src/cui-call-display.c:830 src/cui-call-display.ui:297
 msgid "Hang Up"
 msgstr "挂断"
 
-#: src/cui-call-display.c:688
+#: src/cui-call-display.c:833
 msgid "Calls"
 msgstr "通话"
 
-#: src/cui-call-display.c:692 src/cui-call-display.ui:246
+#: src/cui-call-display.c:837 src/cui-call-display.ui:246
 msgid "Actions"
 msgstr ""
 
-#: src/cui-call-display.c:698
+#: src/cui-call-display.c:843
 msgid "Resume"
 msgstr ""
 
-#: src/cui-call-display.c:698 src/cui-call-display.ui:478
+#: src/cui-call-display.c:843 src/cui-call-display.ui:478
 msgid "Hold"
 msgstr "挂机"
 
-#: src/cui-call-display.c:821 src/cui-call-roster.c:568
+#: src/cui-call-display.c:966 src/cui-call-roster.c:571
 msgid "Incoming Call..."
 msgstr "来电..."
 
-#: src/cui-call-display.c:825 src/cui-call-roster.c:564
+#: src/cui-call-display.c:970 src/cui-call-roster.c:567
 msgid "Dialing..."
 msgstr "正在拨号..."
 
-#: src/cui-call-display.c:829 src/cui-call-roster.c:562
+#: src/cui-call-display.c:974 src/cui-call-roster.c:565
 msgid "On Hold"
 msgstr "保持中"
 
-#: src/cui-call-display.c:833 src/cui-call-roster.c:572
+#: src/cui-call-display.c:978 src/cui-call-roster.c:575
 msgid "Disconnected"
 msgstr "已断开"
 
@@ -193,19 +216,19 @@ msgstr "有线麦克风"
 msgid "Bluetooth Mic"
 msgstr "蓝牙麦克风"
 
-#: src/cui-call-roster.c:446
+#: src/cui-call-roster.c:449
 msgid "I can't talk right now."
 msgstr "我现在不能说话。"
 
-#: src/cui-call-roster.c:560
+#: src/cui-call-roster.c:563
 msgid "Active"
 msgstr "通话中"
 
-#: src/cui-call-roster.c:566
+#: src/cui-call-roster.c:569
 msgid "Alerting..."
 msgstr "正在振铃..."
 
-#: src/cui-call-roster.c:570
+#: src/cui-call-roster.c:573
 msgid "Waiting..."
 msgstr "等待中..."
 

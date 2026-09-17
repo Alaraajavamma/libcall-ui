@@ -20,6 +20,7 @@ typedef struct {
   char     *name;
   char     *state;
   gboolean  multiparty;
+  gboolean  silenced;
 } CuiRosterCall;
 
 CuiCallRoster *cui_call_roster_get_default (void);

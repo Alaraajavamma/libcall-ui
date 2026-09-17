@@ -170,6 +170,7 @@ on_state_ready (GObject *source, GAsyncResult *result, gpointer data)
     const char *number = NULL;
     const char *call_state = NULL;
     gboolean multiparty = FALSE;
+    gboolean silenced = FALSE;
 
     if (g_variant_is_of_type (props, G_VARIANT_TYPE_VARIANT)) {
       GVariant *boxed = props;
@@ -181,11 +182,13 @@ on_state_ready (GObject *source, GAsyncResult *result, gpointer data)
     g_variant_lookup (props, "number", "&s", &number);
     g_variant_lookup (props, "state", "&s", &call_state);
     g_variant_lookup (props, "multiparty", "b", &multiparty);
+    g_variant_lookup (props, "silenced", "b", &silenced);
 
     call->path = g_strdup (path);
     call->number = g_strdup (number ? number : "");
     call->state = g_strdup (call_state ? call_state : "");
     call->multiparty = multiparty;
+    call->silenced = silenced;
     g_ptr_array_add (self->calls, call);
     g_variant_unref (props);
   }

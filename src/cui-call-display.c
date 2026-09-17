@@ -484,8 +484,9 @@ add_background_card (CuiCallDisplay *self, CuiRosterCall *call)
                                          G_CALLBACK (bg_answer_clicked_cb));
 
     g_object_set_data_full (G_OBJECT (answer), "call-path", g_strdup (call->path), g_free);
-    add_card_button (self, GTK_BOX (row), _("Silence"), NULL,
-                     G_CALLBACK (bg_silence_clicked_cb));
+    gtk_widget_set_sensitive (add_card_button (self, GTK_BOX (row), _("Silence"), NULL,
+                                               G_CALLBACK (bg_silence_clicked_cb)),
+                              !call->silenced);
 
     message = add_card_button (self, GTK_BOX (row), _("Message"), NULL,
                                G_CALLBACK (bg_message_clicked_cb));
@@ -644,6 +645,118 @@ update_caller_strips (CuiCallDisplay *self)
 
 
 static void
+bg_private_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+{
+  cui_call_roster_call_action (self->roster, "private_chat",
+                               g_object_get_data (G_OBJECT (button), "call-path"));
+}
+
+
+static void
+bg_drop_leg_clicked_cb (CuiCallDisplay *self, GtkButton *button)
+{
+  cui_call_roster_hang_up (self->roster,
+                           g_object_get_data (G_OBJECT (button), "call-path"));
+}
+
+
+static GtkWidget *
+add_leg_button (CuiCallDisplay *self,
+                GtkBox         *row,
+                const char     *icon,
+                const char     *path,
+                GCallback       callback)
+{
+  GtkWidget *button = gtk_button_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "circular");
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "cui-card-action");
+  g_object_set_data_full (G_OBJECT (button), "call-path", g_strdup (path), g_free);
+  g_signal_connect_swapped (button, "clicked", callback, self);
+  gtk_box_pack_start (row, button, FALSE, FALSE, 0);
+
+  return button;
+}
+
+
+/*
+ * Conference legs are one call to the user, so they get one card rather than
+ * a card each. Which card depends on where the conference is: the one being
+ * spoken to lists its participants, the parked one only offers to swap back.
+ */
+static void
+add_conference_card (CuiCallDisplay *self, GPtrArray *legs, gboolean featured)
+{
+  GtkWidget *card = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  GtkWidget *title;
+  g_autofree char *heading = NULL;
+
+  if (featured) {
+    title = gtk_label_new (_("Participants"));
+    gtk_widget_set_halign (title, GTK_ALIGN_START);
+    gtk_style_context_add_class (gtk_widget_get_style_context (title), "cui-card-title");
+    gtk_box_pack_start (GTK_BOX (card), title, FALSE, FALSE, 0);
+
+    for (guint i = 0; i < legs->len; i++) {
+      CuiRosterCall *leg = g_ptr_array_index (legs, i);
+      GtkWidget *row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
+      GtkWidget *name = gtk_label_new (leg->name ? leg->name : leg->number);
+
+      gtk_label_set_ellipsize (GTK_LABEL (name), PANGO_ELLIPSIZE_END);
+      gtk_widget_set_halign (name, GTK_ALIGN_START);
+      gtk_widget_set_hexpand (name, TRUE);
+      gtk_box_pack_start (GTK_BOX (row), name, TRUE, TRUE, 0);
+
+      add_leg_button (self, GTK_BOX (row), "avatar-default-symbolic", leg->path,
+                      G_CALLBACK (bg_private_clicked_cb));
+      add_leg_button (self, GTK_BOX (row), "call-stop-symbolic", leg->path,
+                      G_CALLBACK (bg_drop_leg_clicked_cb));
+      gtk_box_pack_start (GTK_BOX (card), row, FALSE, FALSE, 0);
+    }
+
+    {
+      GtkWidget *hint = gtk_label_new (_("Private moves the others to hold"));
+
+      gtk_widget_set_halign (hint, GTK_ALIGN_START);
+      gtk_label_set_line_wrap (GTK_LABEL (hint), TRUE);
+      gtk_style_context_add_class (gtk_widget_get_style_context (hint), "dim-label");
+      gtk_box_pack_start (GTK_BOX (card), hint, FALSE, FALSE, 0);
+    }
+  } else {
+    CuiRosterCall *first = g_ptr_array_index (legs, 0);
+    GtkWidget *count_label;
+    GtkWidget *row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
+
+    heading = g_strdup_printf ("%s (%s)", _("Conference Call"),
+                               cui_call_roster_state_label (first->state));
+    title = gtk_label_new (heading);
+    gtk_widget_set_halign (title, GTK_ALIGN_START);
+    gtk_style_context_add_class (gtk_widget_get_style_context (title), "cui-card-title");
+    gtk_box_pack_start (GTK_BOX (card), title, FALSE, FALSE, 0);
+
+    count_label = gtk_label_new (NULL);
+    {
+      g_autofree char *text = g_strdup_printf (
+        ngettext ("%u participant", "%u participants", legs->len), legs->len);
+
+      gtk_label_set_label (GTK_LABEL (count_label), text);
+    }
+    gtk_widget_set_halign (count_label, GTK_ALIGN_START);
+    gtk_style_context_add_class (gtk_widget_get_style_context (count_label), "dim-label");
+    gtk_box_pack_start (GTK_BOX (card), count_label, FALSE, FALSE, 0);
+
+    gtk_box_set_homogeneous (GTK_BOX (row), TRUE);
+    add_card_button (self, GTK_BOX (row), _("Swap"), NULL, G_CALLBACK (bg_swap_clicked_cb));
+    gtk_box_pack_start (GTK_BOX (card), row, FALSE, FALSE, 0);
+  }
+
+  gtk_style_context_add_class (gtk_widget_get_style_context (card), "cui-call-card");
+  gtk_box_pack_start (self->bg_calls, card, FALSE, FALSE, 0);
+  gtk_widget_show_all (card);
+}
+
+
+static void
 on_roster_changed (CuiCallDisplay *self)
 {
   GPtrArray *calls = cui_call_roster_get_calls (self->roster);
@@ -653,6 +766,7 @@ on_roster_changed (CuiCallDisplay *self)
   guint count = cui_call_roster_get_count (self->roster);
   guint others = 0;
   gboolean featured_seen = FALSE;
+  gboolean featured_silenced = FALSE;
 
   gtk_container_foreach (GTK_CONTAINER (self->bg_calls),
                          (GtkCallback) gtk_widget_destroy, NULL);
@@ -662,16 +776,37 @@ on_roster_changed (CuiCallDisplay *self)
    * featured call on. Two calls can share a number, so only the first match
    * is taken as the featured one; the rest are other calls and get cards.
    */
-  for (guint i = 0; calls && i < calls->len; i++) {
-    CuiRosterCall *call = g_ptr_array_index (calls, i);
+  {
+    g_autoptr (GPtrArray) legs = g_ptr_array_new ();
+    gboolean conference_featured = FALSE;
 
-    if (!featured_seen && featured && g_str_equal (call->number, featured)) {
-      featured_seen = TRUE;
-      continue;
+    for (guint i = 0; calls && i < calls->len; i++) {
+      CuiRosterCall *call = g_ptr_array_index (calls, i);
+      gboolean is_featured = !featured_seen && featured &&
+                             g_str_equal (call->number, featured);
+
+      if (is_featured)
+        featured_seen = TRUE;
+
+      if (call->multiparty) {
+        g_ptr_array_add (legs, call);
+        conference_featured |= is_featured;
+        continue;
+      }
+
+      if (is_featured) {
+        featured_silenced = call->silenced;
+        continue;
+      }
+
+      add_background_card (self, call);
+      others++;
     }
 
-    add_background_card (self, call);
-    others++;
+    if (legs->len) {
+      add_conference_card (self, legs, conference_featured);
+      others++;
+    }
   }
 
   gtk_widget_set_visible (self->bg_scrolled, others > 0);
@@ -682,6 +817,10 @@ on_roster_changed (CuiCallDisplay *self)
    */
   gtk_widget_set_visible (self->answer_hint,
                           state == CUI_CALL_STATE_INCOMING && count > 1);
+
+  /* A ring the user already hushed should say so rather than look ignored. */
+  if (state == CUI_CALL_STATE_INCOMING && featured_silenced)
+    gtk_label_set_label (self->status, _("Silenced Incoming Call"));
 
   rebuild_actions_sheet (self, state, count);
   update_caller_strips (self);
